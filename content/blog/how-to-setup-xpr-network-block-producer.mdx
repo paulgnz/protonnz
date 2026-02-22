@@ -1,0 +1,147 @@
+---
+title: "How to Setup an XPR Network Block Producer"
+date: "2023-08-15"
+excerpt: "A comprehensive guide to setting up and running an XPR Network block producer node."
+tags: ["Guide", "XPR Network", "Block Producer", "Infrastructure"]
+---
+
+Running a block producer on XPR Network is one of the most meaningful ways to contribute to the ecosystem. Block producers validate transactions, produce blocks, and help govern the network. This guide walks you through the full process from provisioning a server to registering your node on-chain.
+
+## System Requirements
+
+Before getting started, make sure your server meets the minimum hardware specifications:
+
+- **Operating System:** Ubuntu 22.04 LTS
+- **RAM:** 16 GB minimum (32 GB recommended)
+- **CPU:** 4 cores minimum (8 cores recommended)
+- **Storage:** 500 GB NVMe SSD
+- **Network:** 100 Mbps dedicated connection with a static IP
+
+A cloud provider such as AWS, Hetzner, or OVH works well for this purpose. Bare metal servers are preferred for production environments due to consistent performance.
+
+## Step 1: Prepare the Server
+
+Start by updating your system packages and installing dependencies:
+
+```bash
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y build-essential cmake git libssl-dev libcurl4-openssl-dev
+```
+
+Create a dedicated user to run the node software:
+
+```bash
+sudo adduser nodeos --disabled-password
+sudo usermod -aG sudo nodeos
+```
+
+## Step 2: Install Nodeos
+
+Download and install the latest Antelope Leap release compatible with XPR Network. At the time of writing, version 4.x is recommended:
+
+```bash
+wget https://github.com/AntelopeIO/leap/releases/download/v4.0.4/leap_4.0.4-ubuntu22.04_amd64.deb
+sudo dpkg -i leap_4.0.4-ubuntu22.04_amd64.deb
+```
+
+Verify the installation:
+
+```bash
+nodeos --version
+```
+
+## Step 3: Configure Your Node
+
+Create the configuration directory and add the required files:
+
+```bash
+sudo mkdir -p /etc/nodeos
+sudo chown nodeos:nodeos /etc/nodeos
+```
+
+Download the XPR Network genesis file:
+
+```bash
+curl -o /etc/nodeos/genesis.json https://raw.githubusercontent.com/XPRNetwork/proton/master/genesis.json
+```
+
+Create your `config.ini` with the essential settings:
+
+```ini
+# /etc/nodeos/config.ini
+
+chain-state-db-size-mb = 32768
+reversible-blocks-db-size-mb = 1024
+
+http-server-address = 0.0.0.0:8888
+p2p-listen-endpoint = 0.0.0.0:9876
+
+plugin = eosio::chain_plugin
+plugin = eosio::chain_api_plugin
+plugin = eosio::http_plugin
+plugin = eosio::producer_plugin
+plugin = eosio::producer_api_plugin
+plugin = eosio::net_plugin
+
+producer-name = youraccountbp
+
+signature-provider = EOS_PUBLIC_KEY=KEY:EOS_PRIVATE_KEY
+
+# Add peer nodes
+p2p-peer-address = peer1.xprnetwork.org:9876
+p2p-peer-address = peer2.xprnetwork.org:9876
+```
+
+Replace `youraccountbp` with your actual block producer account name and insert your signing key pair in the `signature-provider` field.
+
+## Step 4: Start the Node and Sync
+
+For the initial launch, start from the genesis block:
+
+```bash
+nodeos --data-dir /var/lib/nodeos --config-dir /etc/nodeos --genesis-json /etc/nodeos/genesis.json
+```
+
+On subsequent starts, omit the `--genesis-json` flag. Syncing from genesis can take several hours. You can monitor progress by tailing the log output or querying the HTTP API:
+
+```bash
+curl http://localhost:8888/v1/chain/get_info | jq '.head_block_num'
+```
+
+## Step 5: Register as a Block Producer
+
+Once your node is fully synced, register your account as a block producer using `cleos`:
+
+```bash
+cleos -u https://api.xprnetwork.org system regproducer youraccountbp EOS_PUBLIC_KEY https://yourwebsite.com 0
+```
+
+You will also need to create a `bp.json` file hosted on your website domain that contains your node information, contact details, and server endpoints. This file is used by voters and monitoring tools to verify your operation.
+
+## Step 6: Monitoring and Maintenance
+
+Reliable block producers maintain high uptime. Set up a systemd service to ensure automatic restarts:
+
+```bash
+sudo tee /etc/systemd/system/nodeos.service > /dev/null <<EOF
+[Unit]
+Description=Nodeos XPR Network Block Producer
+After=network.target
+
+[Service]
+User=nodeos
+ExecStart=/usr/bin/nodeos --data-dir /var/lib/nodeos --config-dir /etc/nodeos
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl enable nodeos
+sudo systemctl start nodeos
+```
+
+Use tools like Prometheus and Grafana to track block production, missed rounds, CPU usage, and chain sync status. The XPR Network community also maintains a Telegram group for block producers where operational issues are discussed.
+
+Running a block producer is a long-term commitment. Keep your node software up to date, participate in testnet upgrades, and engage with the governance process to help strengthen the network.

@@ -1,0 +1,41 @@
+---
+title: "How to Use ProtonSwap with a Yubikey"
+date: "2021-09-05"
+excerpt: "Secure your ProtonSwap trades using hardware-based Yubikey authentication."
+tags: ["Guide", "ProtonSwap", "Yubikey", "Security"]
+---
+
+If you are trading tokens on ProtonSwap, adding a Yubikey to your WebAuth.com wallet is one of the best ways to protect your funds. Instead of relying solely on biometrics or a PIN stored on your phone, a Yubikey gives you a physical hardware factor that must be present every time you sign a transaction.
+
+## Why Use a Yubikey?
+
+WebAuth.com wallets support the FIDO2/WebAuthn standard, which means you can register a hardware security key like a Yubikey as an authentication device for your Proton account. Every swap, transfer, or staking action requires a cryptographic signature. With a Yubikey, that signature can only be produced when the physical key is plugged in and touched. Even if someone gains access to your device, they cannot move your funds without the key in hand.
+
+## Registering Your Yubikey
+
+1. Open the [WebAuth.com](https://webauth.com) wallet in a browser that supports WebAuthn (Chrome, Edge, Firefox, or Safari all work).
+2. Log in to your existing Proton account or create a new one.
+3. Navigate to **Settings > Security Keys**.
+4. Click **Add New Key** and insert your Yubikey into a USB port (or hold it against your phone if using NFC).
+5. When prompted by your browser, tap the metal contact on the Yubikey to confirm registration.
+6. Give the key a recognizable name, such as "Blue Yubikey 5," so you can identify it later.
+
+You can register multiple keys on the same account as backups. It is strongly recommended to keep at least one backup key in a secure location in case your primary key is lost or damaged.
+
+## Making a Swap with Your Yubikey
+
+1. Visit [ProtonSwap](https://protonswap.com) and connect your WebAuth.com wallet.
+2. Select the token pair you want to trade and enter the amount.
+3. Review the swap details, including the estimated output and price impact.
+4. Click **Swap** to initiate the transaction.
+5. Your browser will prompt you to authenticate with your security key. Insert or tap your Yubikey and touch the contact.
+6. Once the signature is confirmed, the transaction is broadcast to the Proton blockchain. You will see a confirmation within a few seconds.
+
+## Tips for Staying Secure
+
+- Never share your Yubikey with anyone. Treat it like a physical wallet key.
+- Remove old or compromised keys from your account immediately under **Settings > Security Keys**.
+- If you are using a Yubikey with NFC on mobile, make sure your phone's NFC reader is enabled before initiating the swap.
+- Consider pairing your Yubikey with a strong account password for an additional layer of protection.
+
+Hardware-based authentication is one of the simplest upgrades you can make to your DeFi security. With a Yubikey registered on WebAuth.com, every ProtonSwap trade requires your explicit physical approval, keeping your tokens safe from remote attacks.
