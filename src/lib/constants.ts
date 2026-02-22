@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "ProtonNZ",
-  title: "ProtonNZ - XPR Network Projects by Paul Grey",
+  title: "ProtonNZ - #1 Block Producer on XPR Network",
   description:
     "Building the future of blockchain with XPR Network. Explore AI agents, decentralized exchanges, social networks, and developer tools.",
   url: "https://protonnz.com",

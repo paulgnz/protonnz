@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "ProtonNZ - XPR Network Projects by Paul Grey";
+export const alt = "ProtonNZ - #1 Block Producer on XPR Network";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -87,7 +87,7 @@ export default async function Image() {
               marginBottom: 40,
             }}
           >
-            XPR Network Projects by Paul Grey
+            #1 Block Producer on XPR Network
           </div>
           <div
             style={{
