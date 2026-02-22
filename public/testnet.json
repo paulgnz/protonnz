@@ -1,0 +1,64 @@
+{
+  "producer_account_name": "protonnz",
+  "org": {
+    "candidate_name": "Proton NZ",
+    "website": "https://protonnz.com",
+    "code_of_conduct":"https://protonnz.com",
+    "email":"paul@protonnz.com",
+    "ownership_disclosure":"https://protonnz.com/ownership-disclosure",
+    "branding":{
+      "logo_256":"https://protonnz.com/bp/protonnz_logo_256.png",
+      "logo_1024":"https://protonnz.com/bp/protonnz_1024.png",
+      "logo_svg":""
+    },
+    "location": {
+      "name": "Auckland",
+      "country": "NZ",
+      "latitude": 36.8483,
+      "longitude": 174.7625
+    },
+    "social": {
+      "steemit": "",
+      "twitter": "protonnz",
+      "youtube": "",
+      "reddit": "",
+      "telegram": "protonnz",
+      "github":"",
+      "keybase": "",
+      "wechat":"",
+      "facebook": "protonnz"
+    }
+  },
+  "nodes": [
+    {
+      "location": {
+        "name": "Auckland",
+        "country": "NZ",
+        "latitude": 36.8483,
+        "longitude": 174.7625
+      },
+      "api_endpoint": "http://tn1.protonnz.com:8888",
+      "ssl_endpoint": "https://tn1.protonnz.com",
+      "node_type": "full"
+    },
+    {
+      "location": {
+        "name": "Auckland",
+        "country": "NZ",
+        "latitude": 36.8483,
+        "longitude": 174.7625
+      },
+      "p2p_endpoint": "tn1.protonnz.com:9876",
+      "node_type": "seed"
+    },
+    {
+      "location": {
+        "name": "Auckland",
+        "country": "NZ",
+        "latitude": 36.8483,
+        "longitude": 174.7625
+      },
+      "node_type": "producer"
+    }
+  ]
+}
