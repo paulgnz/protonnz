@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { getLatestPosts } from "@/lib/blog";
 
 export default function LatestPosts() {
-  const posts = getLatestPosts(3);
+  const posts = getLatestPosts(4);
 
   if (posts.length === 0) return null;
 
@@ -18,7 +18,7 @@ export default function LatestPosts() {
           description="Guides, tutorials, and updates from the XPR Network ecosystem."
         />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {posts.map((post) => (
             <BlogCard key={post.slug} post={post} />
           ))}
