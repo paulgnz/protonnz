@@ -31,7 +31,7 @@ export default function HeroSection() {
         <div className="animate-fade-in">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-zinc-300 mb-8">
             <Sparkles className="w-4 h-4 text-brand-purple-light" />
-            Building on XPR Network
+            #1 Block Producer on XPR Network
           </div>
         </div>
 
@@ -48,7 +48,7 @@ export default function HeroSection() {
           style={{ animationDelay: "0.2s", opacity: 0 }}
         >
           AI agents, decentralized exchanges, social networks, and developer
-          tools &mdash; all powered by XPR Network.
+          tools &mdash; all powered by XPR Network. Thanks for voting ProtonNZ.
         </p>
 
         <div

@@ -67,7 +67,7 @@ export const projects: Project[] = [
     url: "https://dex.protonnz.com",
     status: "live",
     tags: ["DeFi", "DEX", "AMM", "XPR Network"],
-    featured: false,
+    featured: true,
     image: "/images/simple-dex-preview.png",
     gradient: "from-orange-600/30 via-amber-500/20 to-yellow-500/30",
     icon: "💱",

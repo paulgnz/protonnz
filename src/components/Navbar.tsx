@@ -57,19 +57,29 @@ export default function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-1">
-            {siteConfig.nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  pathname === item.href
-                    ? "text-brand-purple-light bg-brand-purple/10"
-                    : "text-zinc-400 hover:text-foreground hover:bg-surface/50"
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {siteConfig.nav.map((item) => {
+              const isExternal = item.href.startsWith("http");
+              const classes = `px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                pathname === item.href
+                  ? "text-brand-purple-light bg-brand-purple/10"
+                  : "text-zinc-400 hover:text-foreground hover:bg-surface/50"
+              }`;
+              return isExternal ? (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={classes}
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link key={item.href} href={item.href} className={classes}>
+                  {item.label}
+                </Link>
+              );
+            })}
             <a
               href={siteConfig.social.x}
               target="_blank"
@@ -103,19 +113,29 @@ export default function Navbar() {
           />
           <div className="relative glass-strong animate-fade-in-down mx-4 mt-2 rounded-xl p-4">
             <div className="flex flex-col gap-1">
-              {siteConfig.nav.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                    pathname === item.href
-                      ? "text-brand-purple-light bg-brand-purple/10"
-                      : "text-zinc-400 hover:text-foreground hover:bg-surface/50"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {siteConfig.nav.map((item) => {
+                const isExternal = item.href.startsWith("http");
+                const classes = `px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                  pathname === item.href
+                    ? "text-brand-purple-light bg-brand-purple/10"
+                    : "text-zinc-400 hover:text-foreground hover:bg-surface/50"
+                }`;
+                return isExternal ? (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={classes}
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link key={item.href} href={item.href} className={classes}>
+                    {item.label}
+                  </Link>
+                );
+              })}
               <a
                 href={siteConfig.social.x}
                 target="_blank"

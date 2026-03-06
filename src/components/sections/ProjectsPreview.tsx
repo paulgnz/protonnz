@@ -21,7 +21,7 @@ export default function ProjectsPreview() {
           />
         </ScrollReveal>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {featured.map((project, i) => (
             <ScrollReveal key={project.slug} delay={i * 100}>
               <ProjectCard project={project} />

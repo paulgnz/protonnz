@@ -16,6 +16,8 @@ export const siteConfig = {
     { label: "About", href: "/about" },
     { label: "Projects", href: "/projects" },
     { label: "Blog", href: "/blog" },
+    { label: "Agents", href: "https://agents.protonnz.com" },
+    { label: "DEX", href: "https://dex.protonnz.com" },
     { label: "Developers", href: "/developers" },
     { label: "Contact", href: "/contact" },
   ],
