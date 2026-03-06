@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Calendar, Clock, ArrowLeft } from "lucide-react";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
@@ -48,6 +49,19 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <ArrowLeft className="w-4 h-4" />
           Back to Blog
         </Button>
+
+        {/* Cover image */}
+        {post.coverImage && (
+          <div className="relative w-full aspect-[1200/630] rounded-xl overflow-hidden mb-8">
+            <Image
+              src={post.coverImage}
+              alt={post.title}
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+        )}
 
         {/* Header */}
         <header className="mb-10">

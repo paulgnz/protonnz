@@ -12,6 +12,7 @@ export interface BlogPost {
   excerpt: string;
   tags: string[];
   readingTime: string;
+  coverImage?: string;
   content: string;
 }
 
@@ -45,6 +46,7 @@ export function getPostBySlug(slug: string): BlogPost | null {
     excerpt: data.excerpt ?? "",
     tags: data.tags ?? [],
     readingTime: stats.text,
+    coverImage: data.coverImage,
     content,
   };
 }

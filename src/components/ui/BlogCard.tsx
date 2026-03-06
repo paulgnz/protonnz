@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Calendar, Clock } from "lucide-react";
 import type { BlogPost } from "@/lib/blog";
@@ -8,11 +9,20 @@ export default function BlogCard({ post }: { post: BlogPost }) {
       href={`/blog/${post.slug}`}
       className="group block rounded-xl glass hover-lift overflow-hidden"
     >
-      {/* Gradient placeholder thumbnail */}
-      <div className="h-40 bg-gradient-to-br from-brand-purple/20 to-brand-pink/20 flex items-center justify-center">
-        <span className="text-4xl opacity-30">
-          {post.tags[0] === "Guide" ? "📖" : "📝"}
-        </span>
+      {/* Thumbnail */}
+      <div className="relative h-40 bg-gradient-to-br from-brand-purple/20 to-brand-pink/20 flex items-center justify-center overflow-hidden">
+        {post.coverImage ? (
+          <Image
+            src={post.coverImage}
+            alt={post.title}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : (
+          <span className="text-4xl opacity-30">
+            {post.tags[0] === "Guide" ? "📖" : "📝"}
+          </span>
+        )}
       </div>
 
       <div className="p-5">
