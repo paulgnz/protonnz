@@ -5,7 +5,7 @@ export const siteConfig = {
     "Building the future of blockchain with XPR Network. Explore AI agents, decentralized exchanges, social networks, and developer tools.",
   url: "https://protonnz.com",
   author: "Paul Grey",
-  company: "Badradio Ltd",
+  company: "Proton NZ LTD",
   social: {
     x: "https://x.com/protonnz",
     telegram: "https://t.me/paulprotonnz",

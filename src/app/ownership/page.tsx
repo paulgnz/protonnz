@@ -5,7 +5,7 @@ import { Building2, Globe, Shield } from "lucide-react";
 export const metadata: Metadata = {
   title: "Ownership",
   description:
-    "Ownership disclosure for ProtonNZ — operated by Badradio Ltd, a New Zealand registered company.",
+    "Ownership disclosure for ProtonNZ — operated by Proton NZ LTD, a New Zealand registered company.",
 };
 
 export default function OwnershipPage() {
@@ -27,13 +27,13 @@ export default function OwnershipPage() {
               </div>
               <div>
                 <h2 className="text-lg font-semibold text-foreground mb-2">
-                  Badradio Ltd
+                  Proton NZ LTD
                 </h2>
                 <p className="text-zinc-400 leading-relaxed">
                   ProtonNZ and all associated projects, websites, and services
-                  are owned and operated by Badradio Ltd, a company registered
+                  are owned and operated by Proton NZ LTD, a company registered
                   in New Zealand. All intellectual property, trademarks, and
-                  content are the property of Badradio Ltd unless otherwise
+                  content are the property of Proton NZ LTD unless otherwise
                   stated.
                 </p>
               </div>
@@ -50,8 +50,8 @@ export default function OwnershipPage() {
                   Operated Projects
                 </h2>
                 <p className="text-zinc-400 leading-relaxed mb-4">
-                  The following domains and services are operated by Badradio
-                  Ltd:
+                  The following domains and services are operated by Proton NZ
+                  LTD:
                 </p>
                 <ul className="space-y-2 text-sm text-zinc-400">
                   <li className="flex items-center gap-2">

@@ -93,7 +93,7 @@ export default function ContactPage() {
               </h3>
             </div>
             <p className="text-sm text-zinc-400">
-              For business inquiries related to Badradio Ltd or partnership
+              For business inquiries related to Proton NZ LTD or partnership
               opportunities, please reach out via X or Telegram and we can
               arrange a more formal communication channel.
             </p>

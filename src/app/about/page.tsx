@@ -6,7 +6,7 @@ import { Shield, Cpu, Globe, Zap, Code, Users } from "lucide-react";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Learn about Paul Grey, XPR Network Consortium member, and the mission behind ProtonNZ and Badradio Ltd.",
+    "Learn about Paul Grey, XPR Network Consortium member, and the mission behind ProtonNZ and Proton NZ LTD.",
 };
 
 const values = [
@@ -62,7 +62,7 @@ export default function AboutPage() {
           </h1>
           <p className="text-lg text-zinc-400 leading-relaxed">
             Blockchain developer, XPR Network Consortium member, and founder of
-            Badradio Ltd. Based in New Zealand, building decentralized
+            Proton NZ LTD. Based in New Zealand, building decentralized
             applications that push the boundaries of what&apos;s possible on-chain.
           </p>
         </div>
@@ -81,7 +81,7 @@ export default function AboutPage() {
                 AI agents, social networks, and developer tools.
               </p>
               <p>
-                Operating through Badradio Ltd, a New Zealand registered
+                Operating through Proton NZ LTD, a New Zealand registered
                 company, Paul has built and deployed multiple live applications
                 on the XPR Network, from the XPR Agents trustless AI registry
                 to Simple DEX, an AMM-powered decentralized exchange.
@@ -115,7 +115,7 @@ export default function AboutPage() {
 
             <GlassCard className="mt-6">
               <h3 className="font-semibold text-foreground mb-2">
-                Badradio Ltd
+                Proton NZ LTD
               </h3>
               <p className="text-sm text-zinc-400">
                 New Zealand registered company operating all ProtonNZ projects

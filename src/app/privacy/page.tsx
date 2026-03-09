@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "Privacy policy for ProtonNZ and Badradio Ltd services.",
+  description: "Privacy policy for ProtonNZ and Proton NZ LTD services.",
 };
 
 export default function PrivacyPage() {
@@ -22,7 +22,7 @@ export default function PrivacyPage() {
               1. Introduction
             </h2>
             <p>
-              ProtonNZ (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;) is operated by Badradio Ltd, a New Zealand
+              ProtonNZ (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;) is operated by Proton NZ LTD, a New Zealand
               registered company. This Privacy Policy explains how we collect,
               use, and protect your information when you use our websites and
               services.

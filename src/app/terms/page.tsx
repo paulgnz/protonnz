@@ -24,7 +24,7 @@ export default function TermsPage() {
             </h2>
             <p>
               By accessing and using ProtonNZ websites and services
-              (&quot;Services&quot;), operated by Badradio Ltd, you agree to be
+              (&quot;Services&quot;), operated by Proton NZ LTD, you agree to be
               bound by these Terms and Conditions. If you do not agree with
               any part of these terms, please do not use our Services.
             </p>
@@ -72,7 +72,7 @@ export default function TermsPage() {
             </h2>
             <p>
               The content, design, and code of our websites are the property of
-              Badradio Ltd unless otherwise stated. Open-source projects are
+              Proton NZ LTD unless otherwise stated. Open-source projects are
               licensed under their respective licenses as specified in their
               repositories.
             </p>
@@ -83,7 +83,7 @@ export default function TermsPage() {
               5. Limitation of Liability
             </h2>
             <p>
-              To the maximum extent permitted by New Zealand law, Badradio Ltd
+              To the maximum extent permitted by New Zealand law, Proton NZ LTD
               shall not be liable for any indirect, incidental, special, or
               consequential damages arising from your use of our Services,
               including but not limited to loss of digital assets, data, or

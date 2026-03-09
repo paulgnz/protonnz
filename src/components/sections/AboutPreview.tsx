@@ -19,7 +19,7 @@ const highlights = [
   {
     icon: Globe,
     title: "New Zealand Based",
-    description: "Operating through Badradio Ltd from New Zealand.",
+    description: "Operating through Proton NZ LTD from New Zealand.",
   },
 ];
 
