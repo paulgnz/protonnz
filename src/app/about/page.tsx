@@ -65,6 +65,14 @@ export default function AboutPage() {
             Proton NZ LTD. Based in New Zealand, building decentralized
             applications that push the boundaries of what&apos;s possible on-chain.
           </p>
+          <a
+            href="https://paulgrey.nz"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-6 text-sm font-medium text-brand-purple-light hover:text-brand-pink-light transition-colors"
+          >
+            Visit paulgrey.nz &rarr;
+          </a>
         </div>
 
         {/* Bio section */}

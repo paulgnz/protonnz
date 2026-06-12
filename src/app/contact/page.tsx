@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import GlassCard from "@/components/ui/GlassCard";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { Send, MessageCircle, Mail } from "lucide-react";
+import { Send, MessageCircle, Mail, Globe } from "lucide-react";
 import { siteConfig } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -43,6 +43,14 @@ const channels = [
     href: siteConfig.social.github,
     cta: "View on GitHub",
   },
+  {
+    icon: Globe,
+    title: "Personal Site",
+    description: "Paul's personal site — writing, projects, and contact.",
+    handle: "paulgrey.nz",
+    href: "https://paulgrey.nz",
+    cta: "Visit paulgrey.nz",
+  },
 ];
 
 export default function ContactPage() {
@@ -55,7 +63,7 @@ export default function ContactPage() {
           description="Have a question, collaboration idea, or just want to chat about XPR Network? Reach out through any of these channels."
         />
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
           {channels.map((channel, i) => (
             <a
               key={i}
