@@ -1,0 +1,84 @@
+---
+title: "Scam Alert: xprdrop.com Is Draining XPR Wallets — Here's How to Stay Safe"
+date: "2026-08-03"
+excerpt: "A fake XPR airdrop is tricking users into signing away control of their accounts. Learn how the scam works, how to check if you're affected, and remove the malicious permission for free."
+tags: ["Security", "Scam Alert", "XPR Network", "WebAuth"]
+---
+
+An active phishing campaign is draining wallets on XPR Network. It advertises a fake "$XPR
+airdrop" at **xprdrop.com**, and if you connect your wallet and "claim", you unknowingly hand an
+attacker a permission that lets them drain your tokens — repeatedly.
+
+We built a free tool to fix it: **[cleanup.protonnz.com](https://cleanup.protonnz.com)**. It finds
+the malicious permission and removes it in one transaction you sign yourself. It is non-custodial
+and never touches your keys.
+
+> **Two rules that stop this attack:**
+> 1. Never open a link from a token memo.
+> 2. There are no free XPR airdrops.
+
+## How the scam works
+
+This is a **permission-delegation drainer**. No private key is stolen — you authorize it yourself
+by signing what looks like an airdrop claim.
+
+1. You receive an unsolicited token (for example `XPRDROP`) in your wallet. Its memo advertises an
+   airdrop site: *"Congrats! Claim your $XPR airdrop on xprdrop.com."*
+2. On the site, "claiming" prompts you to sign a transaction. That transaction quietly creates a
+   new permission on your account (usually named `claim`) controlled by the attacker, and links it
+   to your token transfers — and sometimes to your unstaking.
+3. Seconds later, the attacker uses that permission to transfer your tokens out. Because it is a
+   **permission and not a one-off transfer, it persists** — they can drain you again whenever new
+   funds arrive, until you delete it.
+
+The important part: receiving the `XPRDROP` token is completely harmless. The danger is only if you
+open the link and connect your wallet on the fake site.
+
+## Am I affected?
+
+If you ever connected your wallet to xprdrop.com (or a similar "claim your XPR" site), assume you
+are affected until you check. You can verify in two ways:
+
+- **Use our tool:** go to [cleanup.protonnz.com](https://cleanup.protonnz.com) and either connect
+  your wallet or type your account name for a read-only audit. It flags any permission controlled
+  by an account that isn't you.
+- **Check manually:** open your account on a block explorer and look at the Keys / Auth tab. If you
+  see a permission (often called `claim`) controlled by another account you don't recognise, that's
+  the drainer.
+
+## How to remove it
+
+The cleanest way is to use [cleanup.protonnz.com](https://cleanup.protonnz.com), which bundles every
+step into a single signed transaction:
+
+1. Open [cleanup.protonnz.com](https://cleanup.protonnz.com) and connect your WebAuth wallet.
+2. Review the audit — it shows exactly which permission is malicious and what it's linked to.
+3. Click to build the cleanup transaction. It shows every action in plain language and raw JSON.
+4. Sign it. The malicious permission is unlinked and deleted in one go.
+
+**Important — if you have staked XPR:** the drainer permission is usually linked to token transfers
+but not to unstaking, so your staked XPR is temporarily out of reach. But the moment it becomes
+liquid it can be swept. **Remove the permission first, then unstake.** The tool warns you about this
+automatically.
+
+You do **not** need to rotate your keys — no key was stolen. Deleting the permission is the fix.
+
+## How to verify this is genuine
+
+This tool asks you to connect a wallet and sign an auth transaction — the same shape as the scam it
+fixes. So verify it before you use it:
+
+- It is announced from our official X account, [@protonnz](https://x.com/protonnz).
+- It is served only from **protonnz.com**. Never trust a copy on any other domain.
+- It is fully open source — you can read every line at
+  [github.com/paulgnz/xpr-auth-cleanup](https://github.com/paulgnz/xpr-auth-cleanup).
+
+## Stay safe
+
+Legitimate airdrops never ask you to sign an `updateauth` or `linkauth`, and never need authority
+over your unstaking. When a "claim" wants permission over your account, it's a drainer. When in
+doubt, don't sign — and if you've already been caught, run the cleanup and share it with anyone else
+who might have been targeted.
+
+*This drainer campaign was originally flagged by [George Kurupt](https://x.com/GeorgeKurupt). ProtonNZ
+is an XPR Network block producer.*

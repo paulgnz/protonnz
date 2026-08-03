@@ -14,6 +14,20 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "xpr-auth-cleanup",
+    title: "XPR Auth Cleanup",
+    description:
+      "Free security tool to detect and remove wallet-drainer permissions from your XPR account in one click.",
+    longDescription:
+      "XPR Auth Cleanup is a non-custodial security tool built in response to the xprdrop.com wallet-drainer scam. It audits your account for malicious delegated permissions and removes them in a single transaction you sign yourself. No backend, and it never touches your keys.",
+    url: "https://cleanup.protonnz.com",
+    status: "live",
+    tags: ["Security", "Anti-scam", "XPR Network", "Non-custodial"],
+    featured: true,
+    gradient: "from-cyan-600/30 via-teal-500/20 to-emerald-500/30",
+    icon: "🧹",
+  },
+  {
     slug: "xpr-agents",
     title: "XPR Agents",
     description:
