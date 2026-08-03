@@ -14,6 +14,21 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "xpr-tax",
+    title: "XPR Tax",
+    description:
+      "Full-history tax exports for XPR Network accounts — reconciled to the chain and ready for CoinTracking, Koinly or Summ.",
+    longDescription:
+      "XPR Tax rebuilds an account's entire history directly from the blockchain — every transfer, DEX fill, launchpad claim, staking reward, lending and referral payout — with no 10,000-row explorer limit. It classifies each event, prices XPR Network tokens correctly instead of confusing them with similarly-named coins, and reconciles the totals against your live on-chain balances so nothing is missed. Exports import straight into CoinTracking, Koinly or Summ in your choice of currency, with a reconciliation report and a point-in-time balance time machine for any tax year-end. Pay on-chain, no sign-up. Interface available in nine languages.",
+    url: "https://tax.protonnz.com",
+    status: "live",
+    tags: ["Tax", "XPR Network", "CoinTracking", "Tools"],
+    featured: true,
+    image: "/images/xpr-tax-preview.jpg",
+    gradient: "from-violet-600/30 via-purple-500/20 to-emerald-500/30",
+    icon: "🧾",
+  },
+  {
     slug: "xpr-auth-cleanup",
     title: "XPR Auth Cleanup",
     description:

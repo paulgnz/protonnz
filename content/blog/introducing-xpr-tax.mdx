@@ -1,0 +1,71 @@
+---
+title: "Introducing XPR Tax: Full-History Tax Exports for XPR Network"
+date: "2026-08-04"
+excerpt: "Doing crypto tax on XPR Network was painful — the explorer export caps at 10,000 transactions and generic tools misprice your tokens. So we rebuilt it: complete history, reconciled to your on-chain balances, ready for CoinTracking, Koinly or Summ."
+tags: ["XPR Network", "Tax", "Tools", "CoinTracking"]
+coverImage: "/images/blog/xpr-tax/cover.jpg"
+---
+
+Tax season on XPR Network should not be this hard. The block explorer's built-in export caps at
+**10,000 transactions** and silently drops the rest, and mainstream crypto-tax tools don't
+understand XPR-native activity — DEX fills, launchpad claims, lending, referral income — and often
+price your ecosystem tokens as unrelated coins that happen to share a ticker.
+
+So we built the tool we wished existed: **[tax.protonnz.com](https://tax.protonnz.com)**.
+
+It rebuilds an account's **entire** history directly from the blockchain, classifies every event,
+reconciles the totals against your actual on-chain balances, and exports a file you can import
+straight into your tax software.
+
+## What it does
+
+- **Your complete history — no 10,000-row limit.** Every transaction since day one, for the busy
+  multi-year accounts a quick explorer export can't handle.
+- **Every event classified.** Trades, DEX fills, staking rewards, lending income, launchpad claims,
+  LP and referral fees — sorted for you, not left as raw transfers.
+- **Tokens mapped correctly.** XPR Network tokens, including SimpleDEX ones, are matched to the
+  right asset instead of being confused with similarly-named listed coins. No manual relabeling.
+- **Reconciled to the chain.** We cross-check several archive nodes, repair any gaps, and prove the
+  result against your wallet, staked, DEX and launchpad balances — so nothing is missed.
+- **Import-ready.** Exports work with **CoinTracking**, **Koinly** and **Summ**, in your choice of
+  currency (USD, NZD, AUD, CAD, GBP, EUR). A reconciliation report is included.
+- **Balance time machine.** Reconstruct exactly what any account held at your tax year-end
+  (New Zealand, Australia, Canada, UK, US, EU or any date), with USD and local values.
+
+## Why it's more complete, not less
+
+Public history nodes can quietly lose records — dropped documents, collapsed duplicates, fork
+ghosts. A single source isn't guaranteed complete. XPR Tax reads from a full-history
+[Hyperion archive node](https://hyperion-xpr-mainnet.protonnz.com), cross-checks it against other
+nodes, repairs gaps, and then **proves** the result by reconciling every token's ledger total to
+its live on-chain balance. If something didn't add up, it would tell you rather than hand you a
+wrong number.
+
+## How to use it
+
+1. Go to **[tax.protonnz.com](https://tax.protonnz.com)** and enter your account name (or connect
+   your wallet). You get a free preview.
+2. Pay on-chain — the chain is the receipt, no sign-up and no card.
+3. Download your CSV, plus the reconciliation report, and import it into your tax tool.
+
+The interface is available in nine languages, and you can regenerate your export any time during
+your year.
+
+## Pricing
+
+- **$10 / year** per account — full-history export, reconciliation report included.
+- **$5 / year** if the account stakes ≥1,000,000 XPR and votes for `protonnz` — checked on-chain,
+  no codes or forms.
+- **$20 / year** for up to five accounts in one payment.
+
+Pay in XMD, XUSDC or XPR to the `protonnz` account with the memo shown at checkout, and access is
+verified automatically.
+
+> XPR Tax is data preparation, not tax advice. It produces a complete, reconciled record to hand to
+> you or your accountant — the treatment of that data is theirs to determine.
+
+Bought the old SimpleDEX tax export in the past? We've migrated every past premium buyer to a year
+of free access on the new system — [get in touch](https://x.com/protonnz) if you haven't been
+sorted.
+
+Try it now at **[tax.protonnz.com](https://tax.protonnz.com)**.
