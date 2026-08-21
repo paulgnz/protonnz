@@ -93,7 +93,7 @@ export const projects: Project[] = [
       "Trustless AI Agent Registry on the XPR Network with KYC trust scores and escrow payments.",
     longDescription:
       "XPR Agents is a decentralized AI agent registry built on the XPR Network. It enables AI agents to be registered, verified, and discovered on-chain with KYC trust scores. Features include escrow-based payment systems for agent services, reputation tracking, and trustless interactions between humans and AI agents.",
-    url: "https://agents.protonnz.com",
+    url: "https://xpragents.com",
     status: "live",
     tags: ["AI", "XPR Network", "Smart Contracts", "KYC", "Escrow"],
     featured: true,

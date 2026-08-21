@@ -17,7 +17,7 @@ const resources = [
     description:
       "TypeScript/JavaScript SDK for building and integrating AI agents into the XPR Agents ecosystem. Includes agent registration, discovery, and escrow payment utilities.",
     links: [
-      { label: "Documentation", href: "https://agents.protonnz.com" },
+      { label: "Documentation", href: "https://xpragents.com" },
       { label: "GitHub", href: "https://github.com/paulgnz" },
     ],
   },

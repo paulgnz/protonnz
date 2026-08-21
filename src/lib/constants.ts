@@ -20,7 +20,7 @@ export const siteConfig = {
       children: [
         { label: "XPR Tax", href: "https://tax.protonnz.com", desc: "Full-history tax exports" },
         { label: "XPR Auth Cleanup", href: "https://cleanup.protonnz.com", desc: "Remove wallet-drainer permissions" },
-        { label: "XPR Agents", href: "https://agents.protonnz.com", desc: "On-chain AI agent registry" },
+        { label: "XPR Agents", href: "https://xpragents.com", desc: "On-chain AI agent registry" },
         { label: "SimpleDEX", href: "https://dex.protonnz.com", desc: "Trade on XPR Network" },
       ],
     },
@@ -38,7 +38,7 @@ export const siteConfig = {
       { label: "Contact", href: "/contact" },
     ],
     projects: [
-      { label: "XPR Agents", href: "https://agents.protonnz.com" },
+      { label: "XPR Agents", href: "https://xpragents.com" },
       { label: "Shellbook", href: "https://shellbook.io" },
       { label: "Proton Link", href: "https://proton.link" },
       { label: "Simple DEX", href: "https://dex.protonnz.com" },

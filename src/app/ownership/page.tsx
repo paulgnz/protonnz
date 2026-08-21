@@ -60,7 +60,7 @@ export default function OwnershipPage() {
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-brand-purple" />
-                    agents.protonnz.com — XPR Agents
+                    xpragents.com — XPR Agents
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-brand-purple" />
