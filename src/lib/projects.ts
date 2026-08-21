@@ -14,6 +14,35 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "pulsevm-docs",
+    title: "PulseVM",
+    description:
+      "Docs and marketing site for PulseVM — the open-source execution layer behind A-Chain, the future of XPR Network.",
+    longDescription:
+      "pulsevm.dev is the developer and institutional home for PulseVM: named accounts, native multisig, sub-second instant finality, and no gas for end users, delivered as a metalgo plugin any institution or consortium can run as its own private network. ProtonNZ designed and built the site — hero, feature grid, docs architecture, brand system — as the public face of the open-source execution layer behind A-Chain, the future of XPR Network.",
+    url: "https://pulsevm.dev",
+    status: "live",
+    tags: ["PulseVM", "A-Chain", "Docs", "Institutional"],
+    featured: true,
+    image: "/images/pulsevm-preview.png",
+    gradient: "from-sky-600/30 via-blue-500/20 to-indigo-500/30",
+    icon: "⚡",
+  },
+  {
+    slug: "xpr-pulsevm-migration",
+    title: "XPR → PulseVM Migration Tools",
+    description:
+      "Snapshot and crossover tooling to help XPR Network block producers move state and operations onto PulseVM.",
+    longDescription:
+      "A toolkit under active development at ProtonNZ for XPR Network block producers preparing for the PulseVM crossover: chain snapshots, account and permission exports, token and contract state migration helpers, and BP-side operational guides for running a PulseVM validator alongside their existing XPR infrastructure. The goal is to make the cutover to A-Chain a routine BP task, not a research project.",
+    url: "https://pulsevm.dev",
+    status: "development",
+    tags: ["PulseVM", "XPR Network", "Block Producers", "Migration", "Tools"],
+    featured: true,
+    gradient: "from-indigo-600/30 via-blue-500/20 to-sky-500/30",
+    icon: "🔀",
+  },
+  {
     slug: "xpr-tax",
     title: "XPR Tax",
     description:
