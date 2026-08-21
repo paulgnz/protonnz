@@ -2,57 +2,119 @@ import type { Metadata } from "next";
 import GlassCard from "@/components/ui/GlassCard";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
-import { ExternalLink, BookOpen, GitBranch, Package, Terminal, FileCode } from "lucide-react";
+import {
+  ExternalLink,
+  BookOpen,
+  GitBranch,
+  Package,
+  Terminal,
+  FileCode,
+  Server,
+  Lock,
+  Zap,
+} from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Developers",
   description:
-    "Developer resources, SDKs, documentation, and GitHub repositories for XPR Network projects by ProtonNZ.",
+    "SDKs, open-source repositories, public API nodes, and docs for building on XPR Network and PulseVM — from ProtonNZ.",
 };
 
 const resources = [
   {
     icon: Package,
-    title: "XPR Agents SDK",
+    title: "XPR Agents",
     description:
-      "TypeScript/JavaScript SDK for building and integrating AI agents into the XPR Agents ecosystem. Includes agent registration, discovery, and escrow payment utilities.",
+      "Trustless AI agent registry on XPR Network — identity, reputation, validation, and escrow contracts. TypeScript SDK plus the OpenClaw MCP plugin exposing 55 tools to agents.",
     links: [
-      { label: "Documentation", href: "https://xpragents.com" },
-      { label: "GitHub", href: "https://github.com/paulgnz" },
+      { label: "GitHub", href: "https://github.com/XPRNetwork/xpr-agents" },
+      { label: "xpragents.com", href: "https://xpragents.com" },
     ],
   },
   {
     icon: Terminal,
-    title: "Smart Contract Examples",
+    title: "Pulse Cutover",
     description:
-      "Open-source smart contract templates and examples for the XPR Network. Includes AMM contracts, token contracts, and agent registry contracts.",
+      "Programmatic Antelope → PulseVM cutover agent. BP / API / Hyperion modes, snapshot ceremony with byte-exact verification, zero read downtime, federated history continuity. Rehearsed 22/22 against live XPR testnet state.",
     links: [
-      { label: "GitHub", href: "https://github.com/paulgnz" },
+      { label: "GitHub", href: "https://github.com/paulgnz/pulse-cutover" },
     ],
   },
   {
     icon: FileCode,
-    title: "Proton Link Utilities",
+    title: "PulseVM Docs",
     description:
-      "Utility libraries and tools for working with Proton Link and the XPR Network. Simplify wallet integration and transaction signing.",
+      "Developer and institutional docs for PulseVM — named accounts, native multisig, sub-second finality, no-gas resource model. The open-source execution layer behind A-Chain.",
     links: [
-      { label: "Proton Link", href: "https://proton.link" },
+      { label: "pulsevm.dev", href: "https://pulsevm.dev" },
+    ],
+  },
+  {
+    icon: FileCode,
+    title: "Proton Link",
+    description:
+      "Wallet linking and transaction signing for XPR Network apps — the utility layer most Proton dapps build on.",
+    links: [
+      { label: "proton.link", href: "https://proton.link" },
+    ],
+  },
+  {
+    icon: GitBranch,
+    title: "protonnz.com",
+    description:
+      "This site. Open source Next.js — fork it, use the ProjectCard / GlassCard / SectionHeading components as a starting point for your own XPR project site.",
+    links: [
+      { label: "GitHub", href: "https://github.com/paulgnz/protonnz" },
     ],
   },
 ];
 
-const guides = [
+const nodes = [
   {
-    title: "Getting Started with XPR Network",
-    description: "Learn the basics of XPR Network development, from setting up your environment to deploying your first smart contract.",
+    icon: Server,
+    title: "Mainnet API",
+    endpoint: "https://api.protonnz.com",
+    description:
+      "Public XPR Network mainnet Chain API endpoint operated by ProtonNZ. Use for read queries, transaction pushes, and dapp integrations.",
+    badge: "Public",
+    badgeColor: "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
   },
   {
-    title: "Building AI Agents on XPR",
-    description: "A comprehensive guide to creating, registering, and managing AI agents using the XPR Agents platform.",
+    icon: Server,
+    title: "Testnet API",
+    endpoint: "https://tn1.protonnz.com",
+    description:
+      "Public XPR Network testnet Chain API endpoint operated by ProtonNZ. Point your local wallet or CI here for pre-production testing.",
+    badge: "Public",
+    badgeColor: "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
   },
   {
-    title: "DeFi Development on XPR",
-    description: "Build decentralized financial applications leveraging XPR Network's zero-fee transactions and fast finality.",
+    icon: Zap,
+    title: "Hyperion History",
+    endpoint: "Contact us for access",
+    description:
+      "Full Hyperion history API covering XPR mainnet — indexed actions, deltas, transfers, and streaming endpoints. Access is gated; reach out via the contact page for API keys or a dedicated endpoint.",
+    badge: "Gated",
+    badgeColor: "bg-amber-500/15 text-amber-300 border-amber-500/30",
+    contactLink: "/contact",
+  },
+];
+
+const docs = [
+  {
+    title: "XPR Network Docs",
+    description: "Core protocol documentation — accounts, contracts, wallets, and the developer tooling maintained by the network.",
+    href: "https://docs.xprnetwork.org",
+  },
+  {
+    title: "PulseVM Docs",
+    description: "Everything on the PulseVM execution layer — accounts, permissions, finality, resource model, and running your own network.",
+    href: "https://pulsevm.dev",
+  },
+  {
+    title: "XPR Agents Docs",
+    description: "Registering agents, posting jobs, escrow flows, trust scores, and the OpenClaw MCP plugin for LLM-driven agents.",
+    href: "https://xpragents.com",
   },
 ];
 
@@ -63,10 +125,10 @@ export default function DevelopersPage() {
         <SectionHeading
           label="Developers"
           title="Build on XPR Network"
-          description="SDKs, documentation, and resources to help you build decentralized applications on the XPR Network."
+          description="SDKs, open-source repos, public API nodes, and docs for building on XPR Network and PulseVM."
         />
 
-        {/* SDKs & Libraries */}
+        {/* SDKs & Repos */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {resources.map((resource, i) => (
             <GlassCard key={i} hover>
@@ -79,7 +141,7 @@ export default function DevelopersPage() {
               <p className="text-sm text-zinc-400 mb-4">
                 {resource.description}
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-4">
                 {resource.links.map((link) => (
                   <a
                     key={link.href}
@@ -97,24 +159,80 @@ export default function DevelopersPage() {
           ))}
         </div>
 
-        {/* Guides */}
+        {/* Public Nodes */}
         <SectionHeading
-          label="Guides"
-          title="Developer Guides"
-          description="Step-by-step guides to help you get started with XPR Network development."
+          label="Infrastructure"
+          title="Public Nodes & APIs"
+          description="ProtonNZ operates public XPR Network nodes for mainnet and testnet, and a gated Hyperion history API for teams that need it."
         />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
-          {guides.map((guide, i) => (
-            <GlassCard key={i} hover>
-              <div className="p-2 rounded-lg bg-brand-purple/10 w-fit mb-4">
-                <BookOpen className="w-5 h-5 text-brand-purple-light" />
+          {nodes.map((node) => (
+            <GlassCard key={node.title} hover>
+              <div className="flex items-start justify-between mb-4">
+                <div className="p-2 rounded-lg bg-brand-purple/10">
+                  <node.icon className="w-5 h-5 text-brand-purple-light" />
+                </div>
+                <span
+                  className={`text-xs font-medium px-2 py-1 rounded-full border ${node.badgeColor}`}
+                >
+                  {node.badge}
+                </span>
               </div>
-              <h3 className="font-semibold text-foreground mb-2">
-                {guide.title}
+              <h3 className="text-lg font-semibold text-foreground mb-2">
+                {node.title}
               </h3>
-              <p className="text-sm text-zinc-400">{guide.description}</p>
+              <div className="mb-3">
+                <code className="text-sm text-brand-purple-light bg-surface/50 px-2 py-1 rounded break-all inline-flex items-center gap-1">
+                  {node.endpoint === "Contact us for access" && (
+                    <Lock className="w-3 h-3" />
+                  )}
+                  {node.endpoint}
+                </code>
+              </div>
+              <p className="text-sm text-zinc-400 mb-4">{node.description}</p>
+              {node.contactLink && (
+                <a
+                  href={node.contactLink}
+                  className="inline-flex items-center gap-1 text-sm text-brand-purple-light hover:text-brand-pink-light transition-colors"
+                >
+                  Request access →
+                </a>
+              )}
             </GlassCard>
+          ))}
+        </div>
+
+        {/* Docs & Resources */}
+        <SectionHeading
+          label="Docs"
+          title="Documentation & Resources"
+          description="External docs we lean on when building — for the protocol, the execution layer, and the agent ecosystem."
+        />
+
+        <div className="grid md:grid-cols-3 gap-6 mb-20">
+          {docs.map((doc) => (
+            <a
+              key={doc.href}
+              href={doc.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group"
+            >
+              <GlassCard hover className="h-full">
+                <div className="p-2 rounded-lg bg-brand-purple/10 w-fit mb-4">
+                  <BookOpen className="w-5 h-5 text-brand-purple-light" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-2 group-hover:text-brand-purple-light transition-colors">
+                  {doc.title}
+                </h3>
+                <p className="text-sm text-zinc-400 mb-4">{doc.description}</p>
+                <span className="inline-flex items-center gap-1 text-sm text-brand-purple-light">
+                  Open docs
+                  <ExternalLink className="w-3 h-3" />
+                </span>
+              </GlassCard>
+            </a>
           ))}
         </div>
 
@@ -127,8 +245,9 @@ export default function DevelopersPage() {
             Open Source
           </h3>
           <p className="text-zinc-400 max-w-lg mx-auto mb-6">
-            Our projects are open source. Explore the code, contribute, or fork
-            to build your own applications on the XPR Network.
+            Most of what we ship is open source — fork the code, run your own
+            node, contribute a fix, or use the repos as a starting point for
+            your own XPR Network project.
           </p>
           <Button
             href="https://github.com/paulgnz"
