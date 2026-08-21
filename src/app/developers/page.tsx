@@ -12,6 +12,8 @@ import {
   Server,
   Lock,
   Zap,
+  Sparkles,
+  ArrowRight,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -127,6 +129,52 @@ export default function DevelopersPage() {
           title="Build on XPR Network"
           description="SDKs, open-source repos, public API nodes, and docs for building on XPR Network and PulseVM."
         />
+
+        {/* Featured: XPR Network Dev Skill */}
+        <div className="relative mb-20 overflow-hidden rounded-2xl border border-brand-purple/30 bg-gradient-to-br from-brand-purple/20 via-brand-purple/5 to-brand-pink/10 p-8 md:p-12">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(168,85,247,0.15),_transparent_60%)] pointer-events-none" />
+          <div className="relative flex flex-col lg:flex-row lg:items-center gap-8">
+            <div className="flex-1">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-purple/20 border border-brand-purple/40 text-xs font-semibold text-brand-purple-light mb-4">
+                <Sparkles className="w-3.5 h-3.5" />
+                Featured — Claude Code Skill
+              </div>
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+                XPR Network Dev Skill
+              </h2>
+              <p className="text-zinc-300 leading-relaxed mb-6 max-w-2xl">
+                The fastest way to build on XPR Network with Claude Code.
+                A drop-in skill covering smart contracts, CLI, web SDK, DeFi,
+                NFTs, and infrastructure — install it once and let Claude write,
+                test, and deploy real XPR code with the network&apos;s conventions
+                baked in.
+              </p>
+              <div className="flex flex-wrap items-center gap-4">
+                <Button
+                  href="https://github.com/XPRNetwork/xpr-network-dev-skill"
+                  external
+                >
+                  Install from GitHub
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+                <a
+                  href="https://github.com/XPRNetwork/xpr-network-dev-skill#readme"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-sm font-medium text-brand-purple-light hover:text-brand-pink-light transition-colors"
+                >
+                  Read the docs
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
+            </div>
+            <div className="hidden lg:block shrink-0">
+              <div className="w-32 h-32 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center">
+                <Sparkles className="w-16 h-16 text-brand-purple-light" />
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* SDKs & Repos */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
