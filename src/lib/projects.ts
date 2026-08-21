@@ -43,6 +43,21 @@ export const projects: Project[] = [
     icon: "🔀",
   },
   {
+    slug: "chain-runner",
+    title: "Chain Runner",
+    description:
+      "Three.js endless runner for XPR Network — on-chain leaderboard, NFT character skins, and play-to-earn SHARD tokenomics.",
+    longDescription:
+      "Chain Runner is a browser-based endless runner built with Three.js and TypeScript, running fully on XPR Network. Three lanes, procedurally generated tracks, SHARD play-to-earn tokenomics, AtomicAssets character-skin NFTs, and an on-chain leaderboard. Anti-cheat is server-replay: the backend re-runs every submitted run from its recorded input log against a deterministic sim and only signs matching outcomes, making score spoofing infeasible.",
+    url: "https://chainrunnergame.com",
+    status: "live",
+    tags: ["GameFi", "Three.js", "NFT", "Play-to-Earn", "XPR Network"],
+    featured: true,
+    image: "/images/chain-runner-preview.jpg",
+    gradient: "from-orange-600/30 via-amber-500/20 to-red-500/30",
+    icon: "🏃",
+  },
+  {
     slug: "xpr-tax",
     title: "XPR Tax",
     description:

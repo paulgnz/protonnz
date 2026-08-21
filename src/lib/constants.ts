@@ -21,7 +21,7 @@ export const siteConfig = {
         { label: "XPR Tax", href: "https://tax.protonnz.com", desc: "Full-history tax exports" },
         { label: "XPR Auth Cleanup", href: "https://cleanup.protonnz.com", desc: "Remove wallet-drainer permissions" },
         { label: "XPR Agents", href: "https://agents.protonnz.com", desc: "On-chain AI agent registry" },
-        { label: "DEX", href: "https://dex.protonnz.com", desc: "Trade on XPR Network" },
+        { label: "SimpleDEX", href: "https://dex.protonnz.com", desc: "Trade on XPR Network" },
       ],
     },
     { label: "Projects", href: "/projects" },
