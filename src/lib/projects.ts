@@ -35,7 +35,7 @@ export const projects: Project[] = [
       "Snapshot and crossover tooling to help XPR Network block producers move state and operations onto PulseVM.",
     longDescription:
       "A toolkit under active development at ProtonNZ for XPR Network block producers preparing for the PulseVM crossover: chain snapshots, account and permission exports, token and contract state migration helpers, and BP-side operational guides for running a PulseVM validator alongside their existing XPR infrastructure. The goal is to make the cutover to A-Chain a routine BP task, not a research project.",
-    url: "https://pulsevm.dev",
+    url: "https://github.com/paulgnz/pulse-cutover",
     status: "development",
     tags: ["PulseVM", "XPR Network", "Block Producers", "Migration", "Tools"],
     featured: true,
