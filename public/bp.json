@@ -3,13 +3,13 @@
   "org": {
     "candidate_name": "Proton NZ",
     "website": "https://protonnz.com",
-    "code_of_conduct":"https://protonnz.com",
-    "email":"paul@protonnz.com",
-    "ownership_disclosure":"https://protonnz.com/ownership-disclosure",
-    "branding":{
-      "logo_256":"https://protonnz.com/bp/protonnz_logo_256.png",
-      "logo_1024":"https://protonnz.com/bp/protonnz_1024.png",
-      "logo_svg":""
+    "code_of_conduct": "https://protonnz.com",
+    "email": "paul@protonnz.com",
+    "ownership_disclosure": "https://protonnz.com/ownership-disclosure",
+    "branding": {
+      "logo_256": "https://protonnz.com/bp/protonnz_logo_256.png",
+      "logo_1024": "https://protonnz.com/bp/protonnz_1024.png",
+      "logo_svg": ""
     },
     "location": {
       "name": "Auckland, New Zealand",
@@ -23,9 +23,9 @@
       "youtube": "protonnz",
       "reddit": "protonnz",
       "telegram": "protonnz",
-      "github":"protonnz",
+      "github": "protonnz",
       "keybase": "",
-      "wechat":"",
+      "wechat": "",
       "facebook": "protonnz"
     }
   },
@@ -41,8 +41,10 @@
       "ssl_endpoint": "https://api.protonnz.com",
       "node_type": "query",
       "full": false,
-      "features": ["chain-api"]
-    },      
+      "features": [
+        "chain-api"
+      ]
+    },
     {
       "location": {
         "name": "Auckland",
@@ -51,6 +53,28 @@
         "longitude": 174.7625
       },
       "p2p_endpoint": "api.protonnz.com:9876",
+      "node_type": "seed",
+      "full": false
+    },
+    {
+      "location": {
+        "name": "Ashburn, USA",
+        "country": "US",
+        "latitude": 39.0438,
+        "longitude": -77.4874
+      },
+      "p2p_endpoint": "p2p1.protonnz.com:9876",
+      "node_type": "seed",
+      "full": false
+    },
+    {
+      "location": {
+        "name": "Falkenstein, Germany",
+        "country": "DE",
+        "latitude": 50.4779,
+        "longitude": 12.3713
+      },
+      "p2p_endpoint": "p2p2.protonnz.com:9876",
       "node_type": "seed",
       "full": false
     },
