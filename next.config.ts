@@ -41,6 +41,8 @@ const nextConfig: NextConfig = {
         destination: "/blog/:slug*",
         permanent: true,
       },
+      // BP directory / bp.json backwards compat
+      { source: "/ownership-disclosure", destination: "/ownership", permanent: true },
     ];
   },
 };
