@@ -107,7 +107,7 @@ const resources = [
 const testnetCard = {
   title: "Testnet API",
   endpoint: "https://tn1.protonnz.com",
-  location: "Testnet",
+  location: "Auckland, New Zealand",
   description:
     "Public XPR Network testnet Chain API endpoint operated by ProtonNZ. Point your local wallet or CI here for pre-production testing.",
   features: ["chain-api"],

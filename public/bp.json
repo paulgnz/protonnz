@@ -32,7 +32,7 @@
   "nodes": [
     {
       "location": {
-        "name": "Auckland",
+        "name": "Auckland, New Zealand",
         "country": "NZ",
         "latitude": 36.8483,
         "longitude": 174.7625
@@ -62,7 +62,7 @@
     },
     {
       "location": {
-        "name": "Auckland",
+        "name": "Auckland, New Zealand",
         "country": "NZ",
         "latitude": 36.8483,
         "longitude": 174.7625
@@ -95,7 +95,7 @@
     },
     {
       "location": {
-        "name": "Auckland",
+        "name": "Auckland, New Zealand",
         "country": "NZ",
         "latitude": 36.8483,
         "longitude": 174.7625
