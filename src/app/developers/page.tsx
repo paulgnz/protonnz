@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import GlassCard from "@/components/ui/GlassCard";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
+import NodePingCard from "@/components/ui/NodePingCard";
+import bpJson from "../../../public/bp.json";
 import {
   ExternalLink,
   BookOpen,
@@ -9,12 +11,43 @@ import {
   Package,
   Terminal,
   FileCode,
-  Server,
-  Lock,
-  Zap,
+  Radio,
   Sparkles,
   ArrowRight,
 } from "lucide-react";
+
+type BpNode = {
+  location?: { name?: string; country?: string };
+  ssl_endpoint?: string;
+  api_endpoint?: string;
+  p2p_endpoint?: string;
+  node_type?: string;
+  full?: boolean;
+  features?: string[];
+};
+
+const bpNodes = (bpJson as { nodes: BpNode[] }).nodes;
+
+const queryNodes = bpNodes.filter(
+  (n) => n.node_type === "query" && n.ssl_endpoint
+);
+const seedNodes = bpNodes.filter((n) => n.node_type === "seed" && n.p2p_endpoint);
+
+function queryTitle(features: string[] = []) {
+  if (features.includes("hyperion-v2")) return "Hyperion History";
+  return "Mainnet Chain API";
+}
+
+function queryDescription(features: string[] = [], full = false) {
+  if (features.includes("hyperion-v2")) {
+    return `Full-history Hyperion API — indexed actions, deltas, transfers, and streaming endpoints. ${full ? "Full history." : ""}`.trim();
+  }
+  return "Public XPR Network mainnet Chain API — read queries, transaction pushes, and dapp integrations.";
+}
+
+function locationLabel(n: BpNode) {
+  return n.location?.name ?? "";
+}
 
 export const metadata: Metadata = {
   title: "Developers",
@@ -71,36 +104,14 @@ const resources = [
   },
 ];
 
-const nodes = [
-  {
-    icon: Server,
-    title: "Mainnet API",
-    endpoint: "https://api.protonnz.com",
-    description:
-      "Public XPR Network mainnet Chain API endpoint operated by ProtonNZ. Use for read queries, transaction pushes, and dapp integrations.",
-    badge: "Public",
-    badgeColor: "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
-  },
-  {
-    icon: Server,
-    title: "Testnet API",
-    endpoint: "https://tn1.protonnz.com",
-    description:
-      "Public XPR Network testnet Chain API endpoint operated by ProtonNZ. Point your local wallet or CI here for pre-production testing.",
-    badge: "Public",
-    badgeColor: "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
-  },
-  {
-    icon: Zap,
-    title: "Hyperion History",
-    endpoint: "Contact us for access",
-    description:
-      "Full Hyperion history API covering XPR mainnet — indexed actions, deltas, transfers, and streaming endpoints. Access is gated; reach out via the contact page for API keys or a dedicated endpoint.",
-    badge: "Gated",
-    badgeColor: "bg-amber-500/15 text-amber-300 border-amber-500/30",
-    contactLink: "/contact",
-  },
-];
+const testnetCard = {
+  title: "Testnet API",
+  endpoint: "https://tn1.protonnz.com",
+  location: "Testnet",
+  description:
+    "Public XPR Network testnet Chain API endpoint operated by ProtonNZ. Point your local wallet or CI here for pre-production testing.",
+  features: ["chain-api"],
+};
 
 const docs = [
   {
@@ -211,45 +222,75 @@ export default function DevelopersPage() {
         <SectionHeading
           label="Infrastructure"
           title="Public Nodes & APIs"
-          description="ProtonNZ operates public XPR Network nodes for mainnet and testnet, and a gated Hyperion history API for teams that need it."
+          description="ProtonNZ operates public XPR Network nodes. This list is rendered live from our bp.json — endpoints ping from your browser so you can see your latency to each one."
         />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
-          {nodes.map((node) => (
-            <GlassCard key={node.title} hover>
-              <div className="flex items-start justify-between mb-4">
-                <div className="p-2 rounded-lg bg-brand-purple/10">
-                  <node.icon className="w-5 h-5 text-brand-purple-light" />
-                </div>
-                <span
-                  className={`text-xs font-medium px-2 py-1 rounded-full border ${node.badgeColor}`}
-                >
-                  {node.badge}
-                </span>
-              </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2">
-                {node.title}
-              </h3>
-              <div className="mb-3">
-                <code className="text-sm text-brand-purple-light bg-surface/50 px-2 py-1 rounded break-all inline-flex items-center gap-1">
-                  {node.endpoint === "Contact us for access" && (
-                    <Lock className="w-3 h-3" />
-                  )}
-                  {node.endpoint}
-                </code>
-              </div>
-              <p className="text-sm text-zinc-400 mb-4">{node.description}</p>
-              {node.contactLink && (
-                <a
-                  href={node.contactLink}
-                  className="inline-flex items-center gap-1 text-sm text-brand-purple-light hover:text-brand-pink-light transition-colors"
-                >
-                  Request access →
-                </a>
-              )}
-            </GlassCard>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          {queryNodes.map((n) => (
+            <NodePingCard
+              key={n.ssl_endpoint}
+              title={queryTitle(n.features)}
+              endpoint={n.ssl_endpoint!}
+              location={locationLabel(n)}
+              description={queryDescription(n.features, n.full)}
+              features={n.features ?? []}
+              icon={n.features?.includes("hyperion-v2") ? "zap" : "server"}
+            />
           ))}
+          <NodePingCard
+            title={testnetCard.title}
+            endpoint={testnetCard.endpoint}
+            location={testnetCard.location}
+            description={testnetCard.description}
+            features={testnetCard.features}
+          />
         </div>
+
+        {/* P2P Seed Nodes */}
+        {seedNodes.length > 0 && (
+          <div className="mb-4">
+            <p className="text-xs font-semibold tracking-wider uppercase text-zinc-500 mb-3">
+              P2P Seed Nodes
+            </p>
+            <GlassCard>
+              <p className="text-sm text-zinc-400 mb-4">
+                Public p2p seeds for BPs and node operators syncing XPR Network
+                mainnet. Not for browser clients.
+              </p>
+              <ul className="divide-y divide-zinc-800">
+                {seedNodes.map((n) => (
+                  <li
+                    key={n.p2p_endpoint}
+                    className="flex items-center justify-between py-3 gap-4"
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <Radio className="w-4 h-4 text-brand-purple-light shrink-0" />
+                      <code className="text-sm text-brand-purple-light bg-surface/50 px-2 py-1 rounded truncate">
+                        {n.p2p_endpoint}
+                      </code>
+                    </div>
+                    <span className="text-xs text-zinc-500 shrink-0">
+                      {locationLabel(n)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-xs text-zinc-500 mt-4">
+                Source of truth:{" "}
+                <a
+                  href="/bp.json"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-brand-purple-light hover:text-brand-pink-light transition-colors"
+                >
+                  protonnz.com/bp.json
+                </a>
+              </p>
+            </GlassCard>
+          </div>
+        )}
+
+        <div className="mb-20" />
 
         {/* Docs & Resources */}
         <SectionHeading
