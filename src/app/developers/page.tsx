@@ -8,9 +8,6 @@ import {
   ExternalLink,
   BookOpen,
   GitBranch,
-  Package,
-  Terminal,
-  FileCode,
   Radio,
   Sparkles,
   ArrowRight,
@@ -55,37 +52,6 @@ export const metadata: Metadata = {
     "SDKs, open-source repositories, public API nodes, and docs for building on XPR Network and PulseVM — from ProtonNZ.",
 };
 
-const resources = [
-  {
-    icon: Package,
-    title: "XPR Agents",
-    description:
-      "Trustless AI agent registry on XPR Network — identity, reputation, validation, and escrow contracts. TypeScript SDK plus the OpenClaw MCP plugin exposing 55 tools to agents.",
-    links: [
-      { label: "GitHub", href: "https://github.com/XPRNetwork/xpr-agents" },
-      { label: "xpragents.com", href: "https://xpragents.com" },
-    ],
-  },
-  {
-    icon: Terminal,
-    title: "Pulse Cutover",
-    description:
-      "Programmatic Antelope → PulseVM cutover agent. BP / API / Hyperion modes, snapshot ceremony with byte-exact verification, zero read downtime, federated history continuity. Rehearsed 22/22 against live XPR testnet state.",
-    links: [
-      { label: "GitHub", href: "https://github.com/paulgnz/pulse-cutover" },
-    ],
-  },
-  {
-    icon: FileCode,
-    title: "PulseVM Docs",
-    description:
-      "Developer and institutional docs for PulseVM — named accounts, native multisig, sub-second finality, no-gas resource model. The open-source execution layer behind A-Chain.",
-    links: [
-      { label: "pulsevm.dev", href: "https://pulsevm.dev" },
-    ],
-  },
-];
-
 const testnetCard = {
   title: "Testnet API",
   endpoint: "https://tn1.protonnz.com",
@@ -110,6 +76,11 @@ const docs = [
     title: "XPR Agents Docs",
     description: "Registering agents, posting jobs, escrow flows, trust scores, and the OpenClaw MCP plugin for LLM-driven agents.",
     href: "https://xpragents.com",
+  },
+  {
+    title: "Pulse Cutover",
+    description: "Programmatic Antelope → PulseVM cutover agent — BP / API / Hyperion modes, snapshot ceremony with byte-exact verification, rehearsed 22/22 against live XPR testnet state.",
+    href: "https://github.com/paulgnz/pulse-cutover",
   },
 ];
 
@@ -167,37 +138,6 @@ export default function DevelopersPage() {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* SDKs & Repos */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
-          {resources.map((resource, i) => (
-            <GlassCard key={i} hover>
-              <div className="p-2 rounded-lg bg-brand-purple/10 w-fit mb-4">
-                <resource.icon className="w-5 h-5 text-brand-purple-light" />
-              </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2">
-                {resource.title}
-              </h3>
-              <p className="text-sm text-zinc-400 mb-4">
-                {resource.description}
-              </p>
-              <div className="flex flex-wrap gap-4">
-                {resource.links.map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-sm text-brand-purple-light hover:text-brand-pink-light transition-colors"
-                  >
-                    {link.label}
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                ))}
-              </div>
-            </GlassCard>
-          ))}
         </div>
 
         {/* Public Nodes */}
