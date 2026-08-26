@@ -84,24 +84,6 @@ const resources = [
       { label: "pulsevm.dev", href: "https://pulsevm.dev" },
     ],
   },
-  {
-    icon: FileCode,
-    title: "Proton Link",
-    description:
-      "Wallet linking and transaction signing for XPR Network apps — the utility layer most Proton dapps build on.",
-    links: [
-      { label: "proton.link", href: "https://proton.link" },
-    ],
-  },
-  {
-    icon: GitBranch,
-    title: "protonnz.com",
-    description:
-      "This site. Open source Next.js — fork it, use the ProjectCard / GlassCard / SectionHeading components as a starting point for your own XPR project site.",
-    links: [
-      { label: "GitHub", href: "https://github.com/paulgnz/protonnz" },
-    ],
-  },
 ];
 
 const testnetCard = {
