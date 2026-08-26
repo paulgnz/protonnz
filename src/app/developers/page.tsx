@@ -3,6 +3,7 @@ import GlassCard from "@/components/ui/GlassCard";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
 import NodePingCard from "@/components/ui/NodePingCard";
+import SnapshotSection from "@/components/snapshots/SnapshotSection";
 import bpJson from "../../../public/bp.json";
 import {
   ExternalLink,
@@ -223,6 +224,14 @@ export default function DevelopersPage() {
         )}
 
         <div className="mb-20" />
+
+        {/* Chain Snapshots */}
+        <SectionHeading
+          label="Infrastructure"
+          title="Chain Snapshots"
+          description="Compressed, verified chain state exports for XPR Network mainnet and testnet — restore a fresh node in minutes instead of days. Metadata is fetched live from our snapshot service and revalidated every 5 minutes."
+        />
+        <SnapshotSection />
 
         {/* Docs & Resources */}
         <SectionHeading
