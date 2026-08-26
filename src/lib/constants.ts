@@ -52,6 +52,8 @@ export const siteConfig = {
       { label: "Privacy Policy", href: "/privacy" },
       { label: "Terms & Conditions", href: "/terms" },
       { label: "Ownership", href: "/ownership" },
+      { label: "Code of Conduct", href: "/code-of-conduct" },
+      { label: "Node Status", href: "/status" },
     ],
   },
 } as const;

@@ -3,9 +3,9 @@
   "org": {
     "candidate_name": "Proton NZ",
     "website": "https://protonnz.com",
-    "code_of_conduct": "https://protonnz.com",
+    "code_of_conduct": "https://protonnz.com/code-of-conduct",
     "email": "paul@protonnz.com",
-    "ownership_disclosure": "https://protonnz.com/ownership-disclosure",
+    "ownership_disclosure": "https://protonnz.com/ownership",
     "branding": {
       "logo_256": "https://protonnz.com/bp/protonnz_logo_256.png",
       "logo_1024": "https://protonnz.com/bp/protonnz_1024.png",

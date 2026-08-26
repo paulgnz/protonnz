@@ -225,6 +225,16 @@ export default function DevelopersPage() {
           description="ProtonNZ operates public XPR Network nodes. This list is rendered live from our bp.json — endpoints ping from your browser so you can see your latency to each one."
         />
 
+        <div className="flex justify-center mb-8">
+          <a
+            href="/status"
+            className="inline-flex items-center gap-2 text-sm font-medium text-brand-purple-light hover:text-brand-pink-light transition-colors"
+          >
+            View the full node status page
+            <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {queryNodes.map((n) => (
             <NodePingCard
