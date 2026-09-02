@@ -47,21 +47,6 @@
     },
     {
       "location": {
-        "name": "Falkenstein, Germany",
-        "country": "DE",
-        "latitude": 50.4779,
-        "longitude": 12.3713
-      },
-      "ssl_endpoint": "https://hyperion-xpr-mainnet.protonnz.com",
-      "node_type": "query",
-      "full": true,
-      "features": [
-        "chain-api",
-        "hyperion-v2"
-      ]
-    },
-    {
-      "location": {
         "name": "Auckland, New Zealand",
         "country": "NZ",
         "latitude": -36.8483,
