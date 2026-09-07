@@ -1,9 +1,10 @@
 "use client";
 
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import { projects } from "@/lib/projects";
 
 const stats = [
-  { value: "7+", label: "Active Projects" },
+  { value: `${projects.length}`, label: "Active Projects" },
   { value: "5+", label: "Years Building" },
   { value: "XPR", label: "Network" },
   { value: "NZ", label: "Based" },
