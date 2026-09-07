@@ -14,6 +14,21 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "private-transactions",
+    title: "Private Transactions",
+    description:
+      "Confidential transfers on XPR Network — hidden amounts, visible parties, mandatory auditor viewing key. Not a mixer.",
+    longDescription:
+      "pulse-privacy adds confidential transfers to XPR Network as a bolt-on smart contract (account `xprconf`), not a private chain. Amounts are hidden by ElGamal commitments and Groth16 zero-knowledge proofs; parties stay visible and every transfer carries a mandatory auditor viewing key so compliance and forensics remain possible. Deposit, proven send, and proven withdraw are live on both networks — mainnet with early-access caps (20,000 XPR pool, 1,000 XPR per deposit) running on a rehearsal proving key until the trusted-setup ceremony finalises it. Unaudited.",
+    url: "https://private.protonnz.com",
+    status: "live",
+    tags: ["Privacy", "ZK", "Groth16", "PulseVM", "XPR Network"],
+    featured: true,
+    image: "/images/private-preview.png",
+    gradient: "from-indigo-600/30 via-violet-500/20 to-slate-500/30",
+    icon: "🔒",
+  },
+  {
     slug: "pulsevm-docs",
     title: "PulseVM",
     description:

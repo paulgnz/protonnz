@@ -18,6 +18,7 @@ export const siteConfig = {
       label: "Tools",
       href: "/projects",
       children: [
+        { label: "Private Transactions", href: "https://private.protonnz.com", desc: "Confidential transfers on XPR (ZK)" },
         { label: "XPR Tax", href: "https://tax.protonnz.com", desc: "Full-history tax exports" },
         { label: "XPR Auth Cleanup", href: "https://cleanup.protonnz.com", desc: "Remove wallet-drainer permissions" },
         { label: "XPR Agents", href: "https://xpragents.com", desc: "On-chain AI agent registry" },
