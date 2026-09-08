@@ -23,15 +23,32 @@ export async function generateMetadata({
   const post = getPostBySlug(slug);
   if (!post) return {};
 
+  const url = `${siteConfig.url}/blog/${slug}`;
+  const image = post.coverImage
+    ? [{ url: post.coverImage, alt: post.title }]
+    : undefined;
+
   return {
     title: post.title,
     description: post.excerpt,
+    alternates: {
+      canonical: url,
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: "article",
+      url,
       publishedTime: post.date,
       authors: [siteConfig.author],
+      images: image,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      creator: "@protonnz",
+      images: post.coverImage ? [post.coverImage] : undefined,
     },
   };
 }
