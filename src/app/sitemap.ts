@@ -18,6 +18,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteConfig.url}/projects`, priority: 0.9 },
     { url: `${siteConfig.url}/blog`, priority: 0.8 },
     { url: `${siteConfig.url}/developers`, priority: 0.7 },
+    { url: `${siteConfig.url}/status`, priority: 0.6 },
+    { url: `${siteConfig.url}/code-of-conduct`, priority: 0.5 },
     { url: `${siteConfig.url}/contact`, priority: 0.6 },
     { url: `${siteConfig.url}/privacy`, priority: 0.3 },
     { url: `${siteConfig.url}/terms`, priority: 0.3 },

@@ -1,0 +1,104 @@
+---
+title: "Introducing Private Transactions on XPR Network"
+date: "2026-09-08"
+excerpt: "Confidential transfers with a mandatory auditor viewing key — hidden amounts, visible parties, and no compliance blind spot. Live on mainnet and testnet at private.protonnz.com."
+tags: ["XPR Network", "Privacy", "ZK", "PulseVM", "Launch"]
+coverImage: "/images/blog/private-transactions/cover.png"
+---
+
+![Private Transactions](/images/blog/private-transactions/cover.png)
+
+Public blockchains have a problem most people notice as soon as they use one: your salary, your
+rent, and your medical payments are visible to anyone with a browser. XPR Network is fast and
+cheap, but until now it was as transparent as every other public chain.
+
+That changes today. We're launching **Private Transactions** on XPR Network at
+**[private.protonnz.com](https://private.protonnz.com)**.
+
+## What it is
+
+Private Transactions add **confidential transfers** to XPR Network — the *amounts* you send are
+hidden, while the *parties* stay visible on-chain. It's built as a smart contract
+(account `xprconf`), not a private sidechain, so it inherits XPR's zero-fee UX, sub-second
+finality, and existing WebAuth wallets.
+
+Under the hood:
+
+- **Amounts** are hidden by ElGamal commitments and revealed only to holders of the right keys.
+- **Every transfer** carries a Groth16 zero-knowledge proof that the sum balances — no double-spend,
+  no invented value — verified on-chain before the balance moves.
+- **A mandatory auditor viewing key** is committed at the protocol layer. There is no way to send
+  a private transfer that a designated auditor cannot decrypt after the fact.
+
+The last point is deliberate. It's what makes this **not a mixer**. Compliance, forensics, tax
+audits, court orders — everything that requires reading a specific transfer's amount — remains
+possible for the auditor, and only the auditor.
+
+## What it looks like
+
+By default your activity is hidden. You see your own balances; nobody else does.
+
+![Statement — hidden](/images/blog/private-transactions/statement-hidden.png)
+
+Tap **Reveal** and your local wallet decrypts the amounts. This is a local action — the chain does
+not change what it reveals.
+
+![Statement — revealed](/images/blog/private-transactions/statement-revealed.png)
+
+Deposits move public XPR into the private pool. Withdrawals move it back out. Both are proven
+on-chain and cost the same near-zero fee as any XPR transaction.
+
+![Deposit flow](/images/blog/private-transactions/deposit.png)
+
+Activity is visible to you (and your auditor, on request). Amounts everywhere else on the chain
+remain hidden.
+
+![Activity view](/images/blog/private-transactions/activity.png)
+
+## Early access — read this before you deposit
+
+The mainnet contract is live, but we're launching under deliberate limits while we do the last
+production checks:
+
+- **Pool cap:** 20,000 XPR total
+- **Per-deposit cap:** 1,000 XPR
+- **Proving key:** the current mainnet uses a **rehearsal proving key** while we finalise the
+  multi-party trusted-setup ceremony. Once the ceremony completes, the production key replaces it
+  via a single `setvk` transaction.
+- **Not audited:** the smart contract, the circuit, and the client have not been through
+  third-party audit yet. Amounts are small on purpose.
+- **Testnet is uncapped** at [testnet.private.protonnz.com](https://testnet.private.protonnz.com)
+  — please break it there first.
+
+If you deposit real XPR at this stage, treat it as opting into an early-access product with real
+technical risk. We'll lift the caps and swap the proving key as soon as the ceremony finalises.
+
+## Why a bolt-on, not a private chain?
+
+The original scoping considered launching this as a separate private chain. We chose a smart
+contract on XPR Network instead because:
+
+- **You keep the network you already use.** Same accounts, same wallets, same fee model.
+- **Composability stays real.** Public XPR flows in and out of the private pool as public XPR —
+  the rest of the ecosystem doesn't need to know.
+- **Auditability is enforced by the protocol, not by trust.** The viewing key is a required input
+  to the circuit; you cannot produce a valid proof without it.
+
+The technical design (circuit, contract, threat model, key management) lives in
+`docs/01-design.md` in the [pulse-privacy](https://github.com/paulgnz/pulse-privacy) repository,
+alongside the ceremony tooling and benchmarks.
+
+## What's next
+
+- **Complete the trusted-setup ceremony** and swap in the production proving key.
+- **Third-party audit** of the circuit and the on-chain contract.
+- **Lift the caps** once both of the above are done.
+- **Port the contract to `pulse-cdt-rust`** as part of the broader XPR → PulseVM crossover.
+
+Try it on testnet, send a small amount privately on mainnet if you're comfortable with the risks
+above, and report anything that looks off. This is the biggest single addition to XPR Network's
+capability set in a long time and we'd rather find any edges now, at small size, than after we
+lift the caps.
+
+**[private.protonnz.com](https://private.protonnz.com)** — mainnet, early access, capped.<br />
+**[testnet.private.protonnz.com](https://testnet.private.protonnz.com)** — testnet, uncapped.

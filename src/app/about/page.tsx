@@ -83,22 +83,35 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-4 text-zinc-400 leading-relaxed">
               <p>
-                Paul Grey is a blockchain developer focused on the XPR Network
-                ecosystem. As a member of the XPR Network Consortium, Paul works
-                on production-ready decentralized applications spanning DeFi,
-                AI agents, social networks, and developer tools.
+                Paul Grey is a blockchain developer and XPR Network Consortium
+                member. Through Proton NZ LTD, a New Zealand registered
+                company, Paul operates as a block producer and ships
+                production applications across confidential transfers, on-chain
+                AI agents, DeFi, gaming, and developer infrastructure.
               </p>
               <p>
-                Operating through Proton NZ LTD, a New Zealand registered
-                company, Paul has built and deployed multiple live applications
-                on the XPR Network, from the XPR Agents trustless AI registry
-                to Simple DEX, an AMM-powered decentralized exchange.
+                Recent work includes <strong>Private Transactions</strong> — a
+                bolt-on confidential-transfer contract (<code>xprconf</code>)
+                using Groth16 zero-knowledge proofs and a mandatory auditor
+                viewing key, live on both mainnet and testnet — the{" "}
+                <strong>Pulse Cutover</strong> toolkit that migrates XPR
+                Network operators to PulseVM (the execution layer behind
+                A-Chain), and the <strong>XPR Network Dev Skill</strong>, a
+                Claude Code skill covering smart contracts, CLI, and SDK
+                development on the network.
               </p>
               <p>
-                With a focus on combining AI and blockchain technology, Paul is
-                pioneering new approaches to AI agent identity, verification,
-                and interaction through platforms like Shellbook and the XPR
-                Agents SDK.
+                Earlier public work includes XPR Agents (a trustless AI agent
+                registry with KYC trust scores and escrow), Simple DEX,
+                Shellbook, XPR Tax, and XPR Auth Cleanup. All of it is open
+                source or live on-chain — you can see everything from{" "}
+                <a
+                  href="/projects"
+                  className="text-brand-purple-light hover:text-brand-pink-light transition-colors"
+                >
+                  the projects page
+                </a>
+                .
               </p>
             </div>
           </div>

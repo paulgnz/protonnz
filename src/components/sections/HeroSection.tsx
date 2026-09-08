@@ -39,16 +39,17 @@ export default function HeroSection() {
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight animate-fade-in-up"
           style={{ animationDelay: "0.1s", opacity: 0 }}
         >
-          Building the Future of{" "}
-          <span className="gradient-text">Blockchain</span>
+          Real tools for{" "}
+          <span className="gradient-text">XPR Network</span>
         </h1>
 
         <p
           className="mt-6 text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto animate-fade-in-up"
           style={{ animationDelay: "0.2s", opacity: 0 }}
         >
-          AI agents, decentralized exchanges, social networks, and developer
-          tools &mdash; all powered by XPR Network. Thanks for voting ProtonNZ.
+          Confidential transfers, on-chain AI agents, DeFi, tax exports, and
+          the PulseVM cutover toolkit &mdash; all shipping from a New Zealand
+          block producer. Thanks for voting ProtonNZ.
         </p>
 
         <div
