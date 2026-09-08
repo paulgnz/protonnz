@@ -93,7 +93,7 @@ export default function Navbar() {
                       <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? "rotate-180" : ""}`} />
                     </button>
                     {open && (
-                      <div className="absolute left-0 mt-2 w-72 glass-strong rounded-xl p-2 shadow-lg shadow-black/20 animate-fade-in-down">
+                      <div className="absolute left-0 mt-2 w-72 rounded-xl p-2 shadow-xl shadow-black/50 animate-fade-in-down border border-zinc-800 bg-[#1a1a1d]" style={{ backdropFilter: "none" }}>
                         {children.map((c) => (
                           <a
                             key={c.href}
