@@ -1,113 +1,139 @@
 ---
 title: "The State of XPR Network Block Producers"
 date: "2026-09-08"
-excerpt: "We audited every active XPR block producer's public site and bp.json. The field is more compliant than it looks — and much emptier than it should be. Here's the honest state of the BP layer."
+excerpt: "We audited every active XPR block producer and counted the dapps they've actually shipped on the network. 13 of 36 ship any XPR dapp at all; only 3 ship 3 or more. Here's the honest state of the BP layer."
 tags: ["XPR Network", "Block Producers", "Governance", "Voter Guide"]
 ---
 
-Every voter on XPR Network has the same problem: **how do you tell a block producer that ships from
-one that just parks a domain?** The producer table on-chain gives you a URL. What that URL leads to
-is up to the BP.
+Every voter on XPR Network has the same problem: **how do you tell a block producer that ships
+from one that just parks a domain?** The producer table gives you a URL. Most producers publish
+a working bp.json behind it. So does that make them equal?
 
-So we checked every one of them.
+No — and here's the part that took us a while to get right.
+
+## Infrastructure is the floor, not the ceiling
+
+Every BP has to run nodes. Every BP has to publish a valid bp.json. Every BP has to keep their
+seeds up so other BPs can peer. That's not something to be proud of; it's the **minimum
+requirement to be a BP at all**. If a producer can't do that, they shouldn't be in the schedule.
+
+Making a status page, a Code of Conduct, or a snapshot service is nice, and we ship all three
+ourselves at ProtonNZ — but they're table stakes for infra. Voting on which BP has the shiniest
+status page is like voting on which restaurant has the cleanest kitchen. Yes it matters. No, it
+shouldn't be the reason you eat somewhere.
+
+**The real question is: what have they built on XPR Network?**
 
 ## The methodology
 
 We took the full list of **active block producers** from the `eosio` producers table
-(`is_active == 1`, 38 producers at the time of writing), and for each:
+(`is_active == 1`, 37 producers at the time of writing), verified every URL was reachable, then
+went through each site and counted the dapps they've shipped **on XPR Network**.
 
-1. Fetched the URL they publish on-chain
-2. Fetched `<url>/bp.json` (the standard producer manifest)
-3. Visited the site itself and read what they surface — nodes, monitoring, docs, blog, community
-   channels, ownership, code of conduct
+We did not count:
 
-The two HTTP checks are the objective bar. What's on the site itself is a judgment call.
+- Nodes, seed servers, Hyperion history, status pages, or any BP infrastructure
+- The BP's own marketing site
+- Docs of protocol features they didn't build
+- Products they ship on other chains (Solana bots, WAX games, EOS wallets, generic multi-chain infra)
+- Partner products they resell but didn't build
 
-## The technical bar: mostly clean
+We did count: **live web apps, wallets, DEXes, DeFi tools, NFT platforms, tax/analytics apps,
+bots, browser extensions, mobile apps, games, and SDKs** that run on or exist to serve XPR
+Network users.
 
-**37 of 38 active BPs served a valid `bp.json`** at the time of the check. One was flagged as
-unreachable at the network level (a subsequent recheck showed it working — likely transient).
+## The rankings
 
-That's better than a lot of chains. The protocol-level BP contract on XPR — publish a URL, publish
-a bp.json, run the nodes it says you run — is being met.
+### 1. protonnz — 12 dapps
 
-## The site bar: much weaker
+Full disclosure: this is us. In case you want to check the work, here's the list:
+Private Transactions (`xprconf`), XPR Agents, Shellbook, Simple DEX, XPR Tax, XPR Auth Cleanup,
+Proton Link utilities, Chain Runner, Price Battle, XPR Slots, PulseVM Docs, Pulse Cutover
+toolkit.
 
-Serving a bp.json doesn't mean the site behind it is alive. Of the 38 sites we looked at:
+You can see them all on our [projects page](/projects).
 
-- Only around **4 show current 2025+ activity** — recent blog posts, real infra pages, live status.
-- Roughly a third are **corporate landing pages** where the XPR BP is a footnote to another
-  business (hosting company, e-commerce site, development agency).
-- Several are **frozen** — the site works, but the blog stopped in 2020 or 2021.
-- Two sites publish a **live node status page**.
-- Two publish **chain snapshots** as a service.
-- Six publish an explicit **Code of Conduct** — the standard BP page most BPs are expected to have.
+### 2. cafe (Metallicus) — 4 dapps
 
-That last statistic surprised us. The Code of Conduct is one of the two documents every BP is
-supposed to publish (along with the ownership disclosure), and only about 15% of active BPs
-actually do.
+Metallicus is the parent company that built XPR Network itself. Their shipped user-facing
+product line includes WebAuth Wallet, Metal X (order-book DEX + LOAN protocol), Metal Dollar
+(XMD), and the XPR Network Explorer (Bloks). Everyone on XPR uses at least one of these every
+day.
 
-## What good BP sites do
+### 3. alvosec — 3 dapps
 
-There is one clear standout — **[cerebro.host](https://cerebro.host)** — a multi-network
-infrastructure company where XPR is one chain among several. They publish per-service status
-badges, Grafana dashboards, uptime figures, deploy templates, and support response times. This is
-the ceiling for the field right now, and it's not XPR-dedicated.
+A security company running a BP, and shipping like one. Xprotect Scanner (web3
+domain/phishing intelligence, WebAuth login, XPR-paid credits), XPR AI Assistant
+(WebAuth-gated dev help chat), and an open-source Metal X trading bot. Genuinely
+differentiated work — nobody else on the network is filling the security-tools niche.
 
-The best XPR-focused work we saw includes:
+### 3. homebloksbp — 3 dapps
 
-- **[alvosec](https://alvosec.com)** — a security company running a BP. XProtect scam-domain
-  scanner, a suite of free browser tools (encryption, IP checker, password generator), and
-  HackerOne membership. Their free-tools-as-marketing model is exactly the shape we're aiming for
-  with our own Tools dropdown, and their security focus benefits the whole network.
-- **[brotonbp](https://mainnet.brotonbp.com)** — Whales Alert notification bot, a metrics dashboard
-  at protonstat.info, a curated "Built on Proton" project directory.
-- **[blocksforge](https://www.blocksforge.com)** — a minimal but real node status page and a
-  chain-snapshots service at snapshots.blocksforge.com.
-- **[saltant](https://proton.saltant.io)** — publishes hardware specs and voting commitments (the
-  specs are stale, but the intent is right).
+BlastPad (launchpad for tokens, airdrops, staking pools), XPR Escrow (smart-contract escrow
+for P2P trades), and Crypto Travel Deals (travel booking paid in XPR ecosystem tokens). Three
+different verticals, all with WebAuth integration.
 
-If you're a voter looking at BPs, those four plus cerebro are worth clicking through. The rest
-of the field is either good enough (bp.json works, site works, minimal content) or effectively
-dark.
+### 4. madblocks, rockeronebp, bloxprod, xprdata — 2 dapps each
 
-## What we changed on our own site because of this
+- **madblocks** — MadTower (climb-and-cash-out game with a real XPR pot) and MadRaffle
+  (voter-facing raffle from BP rewards).
+- **rockeronebp** — Neard (on-chain music streaming with real-time artist payouts) and Railgun
+  (signature-less session protocol for XPR apps).
+- **bloxprod** — NFTPacks (random-mint NFT pack launchpad) and NFTClaimHub (streak pools,
+  airdrops, and reward claims for NFT holders).
+- **xprdata** — XPR Dashboard (portfolio tracking, price history, SimpleLaunch tracking) and
+  Whale Watcher (real-time large-transfer feed).
 
-Auditing others is fair game only if you fix your own gaps first. Off the back of this exercise
-we shipped:
+### 5. Single-dapp BPs
 
-- **[/status](https://www.protonnz.com/status)** — live node status page, checked from the
-  visitor's browser, that pings every public endpoint every 30 seconds.
-- **[/code-of-conduct](https://www.protonnz.com/code-of-conduct)** — the eight commitments we
-  actually make as a BP (independence, infrastructure, security, transparency, governance,
-  neutrality, communication, community).
-- **[Chain Snapshots on /developers](https://www.protonnz.com/developers)** — verified,
-  compressed mainnet and testnet snapshots with sha256 metadata for node operators.
-- **[bp.json](https://protonnz.com/bp.json)** — cleaned up so every URL in it resolves, ownership
-  disclosure points at the real page, code of conduct points at the real page, and every node is
-  listed with the correct location.
+**brotonbp** (XPR Whales Alert Telegram bot), **storexbp** (Storex marketplace), **snipverse**
+(SocialFi platform), **danemarkbp** (XPR Tax Time Machine), **artwebin** (XPR Hub), and
+**bpadex** (A-DEX XPR deployment).
 
-None of this is revolutionary. It's the same set of pages any BP could ship in an afternoon. That
-we can move to the top of the "sites that actually publish infra" list by doing this says more
-about the field than about us.
+### BPs shipping non-XPR products only
+
+Real builders, but their work isn't on XPR: **cryptolions** (Jungle Testnet, EOS tools),
+**cerebroai** (Akash templates, Decred), **eosrio** (SimplEOS, generic Hyperion),
+**eosiodetroit** (WAX games), **eosarabianet** (EOS content), **xprnodeonebp** (unrelated
+consumer products), **genereos** (multi-chain staking), **eosamsterdam** (Zaisan services),
+**energybp** (SOLAR/ENERGY token sites).
+
+### BPs with no shipped dapps we could verify
+
+totalproton, protonuk, eosusa, blocksforge, protonmadrid, saltant, catsvote, chaininfra,
+luminaryvisn, xprcore, ledgerwiseio, cindronet, turtlebp.
+
+Some of these have announced things (cindronet's WezaPay, ledgerwise's tools subdomain) that
+don't currently resolve to a working app. Some publish good infra. None of that is a shipped
+XPR dapp.
+
+## The honest headline
+
+**13 of 36 non-ProtonNZ BPs ship at least one XPR-specific dapp. Only 3 ship 3 or more. The
+next highest after ProtonNZ ships 4.**
+
+Rounding is doing some work here — Metallicus built the entire network, so ranking their
+product output against ours isn't quite fair either direction. But excluding them, **the gap
+between ProtonNZ and the next builder-BP is 12 vs 3.**
+
+If you filter for "BPs whose product output is roughly proportional to their BP rewards,"
+alvosec, homebloksbp, madblocks, rockeronebp, bloxprod, and xprdata are the ones we'd point
+voters at first — because they're actively shipping user-facing XPR software, not just running
+nodes.
 
 ## The takeaway for voters
 
-**Vote for producers you can see shipping.** The URL in the producers table is a promise; the
-site behind it is the evidence. Click through five random BPs you're voting for right now.
+**Vote for the BPs building the apps you actually use.**
 
-- Does the site load?
-- Does `bp.json` resolve at the URL they publish?
-- Is there any evidence of activity in the last 12 months?
-- Do they say anywhere what they actually do with the block reward?
-- Do they have a Code of Conduct?
+Running a node is a job. Building a dapp that a real user opens is a different job. Both
+matter. But if you want to reward the second, you have to look past the shiny infra pages and
+ask: *what did you actually ship for XPR users this year?*
 
-Most producers pass the first two questions. Most fail one or more of the last three. That is a
-signal.
+If you like the sound of that yardstick, and ProtonNZ is the kind of BP you want backing this
+network, we'd appreciate your vote. Open [WebAuth](https://webauth.com), head to the Vote tab,
+and pick `protonnz`.
 
-If ProtonNZ is the kind of BP you want backing this network — one that builds, ships, and stays
-visible about the state of its infrastructure — we'd appreciate your vote. Open
-[WebAuth](https://webauth.com), head to the Vote tab, and pick `protonnz`.
-
-*Numbers in this post reflect the state of the active BP list on the date of publication. The field
-changes; the check is worth re-running periodically.*
+*Numbers reflect the state of the active BP list on the date of publication. The field
+changes; the check is worth re-running periodically. If we missed a dapp you shipped on XPR
+that fits our criteria, let us know via the [contact page](/contact) and we'll update the
+count.*
