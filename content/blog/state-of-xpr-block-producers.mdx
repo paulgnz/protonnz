@@ -1,7 +1,7 @@
 ---
 title: "The State of XPR Network Block Producers"
 date: "2026-09-08"
-excerpt: "We audited every active XPR block producer and counted the dapps they've actually shipped on the network. 15 of 36 ship any XPR dapp at all; only 3 ship 3 or more. Here's the honest state of the BP layer."
+excerpt: "We audited every active XPR block producer and counted the dapps they've actually shipped on the network. 16 of 36 ship any XPR dapp at all; only 3 ship 3 or more. Here's the honest state of the BP layer."
 tags: ["XPR Network", "Block Producers", "Governance", "Voter Guide"]
 coverImage: "/images/blog/state-of-xpr-bps/cover.png"
 ---
@@ -83,8 +83,13 @@ BlastPad (launchpad for tokens, airdrops, staking pools), XPR Escrow (smart-cont
 for P2P trades), and Crypto Travel Deals (travel booking paid in XPR ecosystem tokens). Three
 different verticals, all with WebAuth integration.
 
-### 4. madblocks, rockeronebp, bloxprod, xprdata — 2 dapps each
+### 4. protonind, madblocks, rockeronebp, bloxprod, xprdata — 2 dapps each
 
+- **protonind** — XPR Voter Intelligence / "XPR Radar" (track vote health and identify ghost
+  BPs at xpr.voterintelligence.blocksindia.com) and the XPR Msig App (governance tool to
+  remove inactive BPs at xpr-rmvproducer-msig-app.vercel.app). Protonind advertises more
+  (an MCP server, TalkToXPR chat, XPR Casino) but those aren't consistently reachable at the
+  time of the audit, so we're only counting the two that clearly work.
 - **madblocks** — MadTower (climb-and-cash-out game with a real XPR pot) and MadRaffle
   (voter-facing raffle from BP rewards).
 - **rockeronebp** — Neard (on-chain music streaming with real-time artist payouts) and Railgun
@@ -118,17 +123,17 @@ that don't currently resolve to a working app. That still counts as unshipped fo
 
 ## The honest headline
 
-**15 of 36 non-ProtonNZ BPs ship at least one XPR-specific dapp. Only 3 ship 3 or more. The
-next highest after ProtonNZ ships 4.**
+**16 of 36 non-ProtonNZ BPs ship at least one XPR-specific dapp. 3 ship 3 or more. The next
+highest after ProtonNZ is cafe (Metallicus) at 4.**
 
 Rounding is doing some work here — Metallicus built the entire network, so ranking their
 product output against ours isn't quite fair either direction. But excluding them, **the gap
-between ProtonNZ and the next builder-BP is 12 vs 3.**
+between ProtonNZ and the next independent builder-BP is 12 vs 3.**
 
 If you filter for "BPs whose product output is roughly proportional to their BP rewards,"
-alvosec, homebloksbp, madblocks, rockeronebp, bloxprod, and xprdata are the ones we'd point
-voters at first — because they're actively shipping user-facing XPR software, not just running
-nodes.
+alvosec, homebloksbp, protonind, madblocks, rockeronebp, bloxprod, and xprdata are the ones
+we'd point voters at first — because they're actively shipping user-facing XPR software, not
+just running nodes.
 
 ## The takeaway for voters
 
