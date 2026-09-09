@@ -210,11 +210,63 @@ genuinely good product that people use every day contributes more to XPR than te
 opens.** A BP sitting on a single dapp with real users may well be doing more for the network
 than one with five quietly idle ones.
 
-We're counting shipped output because it's the thing we can verify from the outside. We don't
-have usage numbers, retention, transaction volume, or revenue for most of these — and neither
-do you, as a voter. So treat the count as the start of the question, not the answer to it. It
-tells you who has *built* something. It doesn't tell you what's *working*. If you use a BP's
-product regularly, that's better information than anything in this post.
+We're counting shipped output because it's the thing we can verify from the outside. So treat
+the count as the start of the question, not the answer to it. It tells you who has *built*
+something. It doesn't tell you what's *working*.
+
+So we went and looked.
+
+### What the chain actually says
+
+**Snapshot: 10 September 2026.** We queried Hyperion and the chain API for every dapp above
+with an identifiable contract, counting **distinct accounts** rather than actions. Then we
+applied one filter that changes everything: **we discounted reward-farming.**
+
+Free airdrop claims, daily faucet rolls, "earn tokens for posting" and claim-only reward pools
+are not product usage — they're people collecting free tokens, and any dapp can manufacture
+that number by giving something away. Strip it out and count only accounts doing something
+*economically real*: paying, trading, lending, escrowing, creating, donating.
+
+Here is how many real people each of these has, over 30 days unless noted:
+
+| Dapp | BP | Real users |
+|---|---|---|
+| LOAN | cafe | **355** active lenders/borrowers (7,548 accounts lifetime) |
+| Chain Runner | protonnz | **312** distinct players |
+| SimpleLaunch | protonnz | **243** token creators (lifetime; 462 tokens) |
+| BlastPad | homebloksbp | **114** stakers |
+| Simple DEX | protonnz | **88** swappers |
+| GeneroX | alvosec | **68** donors (lifetime; 2.1M XPR / ~$59k) |
+| Metal X order-book | cafe | **62** order placers |
+| Metal X swaps | cafe | **39** swappers |
+| XPR Escrow | homebloksbp | **18** (60 escrows ever filled, of 5,648 opened) |
+| XPR Agents | protonnz | **13** — and 40 of 76 jobs were us |
+| Private Transactions | protonnz | **12** senders (launch week) |
+| Xprotect | alvosec | **3** payers (46 lifetime) |
+
+Read that column again. **The best-used dapp on XPR Network has a few hundred real users. Most
+have a few dozen. Several have fewer than twenty.**
+
+For scale: WebAuth has created **347,415 accounts** in its lifetime. The number of people doing
+something economically meaningful on the network in a given month is, at most, in the low
+hundreds — and the same accounts recur across dapps, so the true figure is smaller than any
+column here suggests. That is the real state of the network, and no dapp count communicates it.
+
+Three honest observations from our own row of that table. **Private Transactions has twelve
+users and about half the sends are ours.** Our **GLBDEX** listing has had no sale since June
+2024 — 501 in 2022, one in 2023, one in 2024, none since. **Price Battle** has had no human
+opponent accept a challenge since June; the recent activity is its own bot talking to itself.
+We counted all three in our twelve.
+
+Some dapps are legitimately invisible here and that's fine: portfolio trackers, whale-watch
+feeds, tax tools, vote UIs and alert bots *read* the chain rather than write to it. Absence of
+a contract isn't absence of value.
+
+And the number that best makes the case: **GeneroX has no contract of its own, 33 on-chain
+actions, and one donor in the last 30 days.** By every metric in this post it barely registers.
+It has also moved roughly fifty-nine thousand US dollars of real donations from 68 real people
+to disaster relief. If you rank purely by count, you rank it near zero. That should tell you
+exactly how much weight to put on counting.
 
 ## A note to fellow BPs
 
