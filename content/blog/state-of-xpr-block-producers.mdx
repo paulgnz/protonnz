@@ -218,84 +218,39 @@ So we went and looked.
 
 ### What the chain actually says
 
-**Snapshot: 10 September 2026.** Rather than sample, we ran a full six-month census: every
-action on every major XPR dapp from 10 March to 10 September 2026 — **10.9 million actions**,
-paged in full from Hyperion. For each dapp we counted **distinct accounts**, verifying the real
-user field per action type first (most XPR dapps relay transactions, so the signing authority is
-usually the contract, not the person).
+So we went and looked. **Snapshot: 10 September 2026.** For every BP dapp above with an
+identifiable contract, we counted the distinct accounts that used it over the six months to
+that date — a full census of 10.9 million actions, not a sample.
 
-| Dapp | BP | Distinct accounts (6 months) |
+| Dapp | BP | Distinct users (6 months) |
 |---|---|---|
-| Metal X swaps | cafe | **5,638** |
-| Vibrr | homebloksbp | **4,553** |
-| LOAN | cafe | **4,196** |
-| Metal X order-book | cafe | **2,366** |
-| Chain Runner | protonnz | **1,725** |
-| Snipverse | snipverse | **854** |
-| SimpleDEX | protonnz | **755** |
-| BlastPad | homebloksbp | **715** |
-| XPR Casino | protonind | **85** |
-| XPR Agents | protonnz | **30** |
+| Metal X swaps | cafe | 5,638 |
+| Vibrr | homebloksbp | 4,553 |
+| LOAN | cafe | 4,196 |
+| Metal X order-book | cafe | 2,366 |
+| Chain Runner | protonnz | 1,725 |
+| Snipverse | snipverse | 854 |
+| SimpleDEX | protonnz | 755 |
+| BlastPad | homebloksbp | 715 |
+| XPR Casino | protonind | 85 |
+| XPR Agents | protonnz | 30 |
 
-Those add to 20,917, but the true union is **14,104 distinct accounts** — the naive sum
-overstates by 48%, because the same people show up in several places. Though less than you'd
-think: **69% of accounts appear in exactly one dapp.** XPR users don't roam the ecosystem, they
-pick a thing and stay in it.
+One thing to read carefully: several of these dapps pay people to use them. Vibrr rewards posts
+and likes, XPR Casino gives away free spins, BlastPad and Snipverse pay staking rewards, Chain
+Runner mints SHARD for playing. Their numbers include reward-claimers. We've counted every dapp
+the same way rather than deciding whose users are legitimate — but it's worth knowing which
+numbers are earned attention and which are bought.
 
-### Now strip out the machines
+**Notice how little this correlates with the rankings above.** Vibrr has more distinct users
+than SimpleDEX and Chain Runner combined. LOAN alone beats every non-Metallicus dapp except
+Vibrr. A BP with two dapps can reach more people than a BP with five, and nothing in a count
+of shipped products tells you that.
 
-Here is the finding that reframes everything above. We classified every account in that union
-using objective tests — does `get_abi` return actions (i.e. it's a contract), does ≥20% of its
-activity land in a block alongside its own other actions (programmatic multi-leg arbitrage), is
-its median gap between actions under two seconds, is it active round-the-clock.
-
-| Class | Accounts | Share of all activity |
-|---|---|---|
-| Bots | 316 | 78.6% |
-| Contracts acting as users | 35 | 2.6% |
-| Builder / team accounts | 12 | 12.4% |
-| **Excluded** | **363 (2.6% of accounts)** | **93.6%** |
-| **Human** | **13,741 (97.4%)** | **6.4%** |
-
-**363 accounts produce 93.6% of everything that happens on XPR Network.** The single busiest,
-`also`, ran 3.03 million actions at 21,410 per day with 93% of them self-batched in-block. The
-network operator's own market-making account, `metallicus`, contributed 1.35 million. There is a
-`metallicus1` through `metallicus15` market-maker fleet, and arbitrage contracts with names like
-`arb.catdogs` and `loanreaper`.
-
-Broken down by venue, the DEXes are almost entirely machines: **SimpleDEX 98.1% bot traffic,
-Metal X order-book 96.9%, Metal X swaps 96.7%.** The games are the opposite — Chain Runner is
-4.0% bots, Vibrr 1.1%.
-
-### So how many real users does XPR have?
-
-> **Roughly 13,700 distinct human accounts were active on XPR Network over the six months to
-> 10 September 2026.** Realistic range: 8,000–13,800.
-
-The lower bound isn't about bots. 5,687 of those accounts appear *only* in Vibrr and/or Chain
-Runner — both reward tokens for oracle-signed, off-chain activity, which is cheap to sybil, and
-1,516 of them made three actions or fewer. We can't rule them in or out from chain data alone.
-Excluding that block entirely gives 8,054. Stricter cuts: 9,120 humans with five or more
-actions; 4,053 who touched two or more dapps.
-
-These are also *accounts*, not people — one person may hold several — so treat it as a ceiling
-on humans. And it covers ten dapps; bare token transfers, NFT marketplaces and staking are out
-of scope.
-
-Even among humans, activity is concentrated: the top 1% account for 36% of it, Gini 0.828.
-1,287 human accounts did exactly one thing all year.
-
-### What this does to the rankings above
-
-It complicates them, which is the point. **Vibrr has more distinct users than SimpleDEX and
-Chain Runner combined.** **LOAN alone has more than every non-Metallicus dapp except Vibrr.**
-Neither fact is visible in a count of how many dapps a BP has shipped.
-
-Three honest notes on our own row. **Private Transactions had twelve senders in its launch
-week and about half the sends were ours.** Our **GLBDEX** listing has had no sale since June
-2024 — 501 in 2022, one in 2023, one in 2024, none since. **Price Battle** has had no human
-opponent accept a challenge since June; recent activity is its own bot talking to itself. All
-three were in our twelve.
+Three honest notes on our own row. **Private Transactions had twelve senders in its launch week
+and about half the sends were ours.** Our **GLBDEX** listing has had no sale since June 2024 —
+501 in 2022, one in 2023, one in 2024, none since. **Price Battle** has had no human opponent
+accept a challenge since June; recent activity is its own bot talking to itself. All three were
+in our twelve.
 
 Some dapps are legitimately invisible in this data and that's fine: portfolio trackers,
 whale-watch feeds, tax tools, vote UIs and alert bots *read* the chain rather than write to it.
@@ -305,7 +260,7 @@ And the number that makes the case best: **GeneroX has no contract of its own an
 actions in total.** By every metric in this post it barely registers. It has also moved roughly
 fifty-nine thousand US dollars of real donations from 68 real people to wildfire and medical-aid
 campaigns. Rank purely by count and you rank it near zero. That should tell you exactly how much
-weight to put on counting.
+weight to put on counting — including the counting we just did.
 
 ## A note to fellow BPs
 
