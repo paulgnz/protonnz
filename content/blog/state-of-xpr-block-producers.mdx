@@ -50,6 +50,11 @@ We did count: **live web apps, wallets, DEXes, DeFi tools, NFT platforms, tax/an
 bots, browser extensions, mobile apps, games, and SDKs** that run on or exist to serve XPR
 Network users.
 
+We did **not** count **thin AI wrappers**: MCP servers that expose XPR tools to LLM agents,
+and "chat with XPR" style products that are essentially a system prompt on top of a public
+chain. Those are useful, but they're not products a user or developer opens for its own sake
+— they're glue for something else.
+
 > **BPs — if we got you wrong, tell us.** This audit is done in good faith from public
 > information at a single point in time. If you're a block producer on XPR Network and we've
 > missed a dapp you've shipped, mislabelled something you built, or got any of the details
@@ -67,14 +72,14 @@ toolkit, and the XPR Network Dev Skill (a Claude Code skill for building on XPR)
 
 You can see them all on our [projects page](/projects).
 
-### 2. cafe (Metallicus) — 4 dapps
+### 2. cafe (Metallicus) — 5 dapps
 
 Metallicus is the parent company that built XPR Network itself. Their shipped user-facing
-product line includes WebAuth Wallet, Metal X (order-book DEX + LOAN protocol), Metal Dollar
-(XMD), and the XPR Network Explorer (Bloks). Everyone on XPR uses at least one of these every
-day.
+product line: WebAuth Wallet, Metal X (order-book DEX), LOAN (the lending protocol on Metal
+X), Metal Dollar (XMD stablecoin), and the XPR Network Explorer (Bloks). Everyone on XPR uses
+at least one of these every day.
 
-### 2. alvosec — 4 dapps
+### 3. alvosec — 4 dapps
 
 A security company running a BP, and shipping like one. Xprotect Scanner (web3
 domain/phishing intelligence, WebAuth login, XPR-paid credits), XPR AI Assistant
@@ -83,19 +88,19 @@ domain/phishing intelligence, WebAuth login, XPR-paid credits), XPR AI Assistant
 Genuinely differentiated work — nobody else on the network is filling the security-and-tools
 niche at this depth.
 
-### 4. homebloksbp — 3 dapps
+### 4. homebloksbp, protonind — 3 dapps each
 
-BlastPad (launchpad for tokens, airdrops, staking pools), XPR Escrow (smart-contract escrow
-for P2P trades), and Crypto Travel Deals (travel booking paid in XPR ecosystem tokens). Three
-different verticals, all with WebAuth integration.
-
-### 5. protonind, madblocks, rockeronebp, bloxprod, xprdata — 2 dapps each
-
+- **homebloksbp** — BlastPad (launchpad for tokens, airdrops, staking pools), XPR Escrow
+  (smart-contract escrow for P2P trades), and Crypto Travel Deals (travel booking paid in
+  XPR ecosystem tokens). Three different verticals, all with WebAuth integration.
 - **protonind** — XPR Voter Intelligence / "XPR Radar" (track vote health and identify ghost
-  BPs at xpr.voterintelligence.blocksindia.com) and the XPR Msig App (governance tool to
-  remove inactive BPs at xpr-rmvproducer-msig-app.vercel.app). Protonind advertises more
-  (an MCP server, TalkToXPR chat, XPR Casino) but those aren't consistently reachable at the
-  time of the audit, so we're only counting the two that clearly work.
+  BPs at xpr.voterintelligence.blocksindia.com), the XPR Msig App (governance tool to remove
+  inactive BPs at xpr-rmvproducer-msig-app.vercel.app), and XPR Casino (Spin & Win /
+  Scratch & Win at xprcasino.blocksindia.com). We don't count their MCP server or TalkToXPR
+  chat here — see the note on AI wrappers below.
+
+### 5. madblocks, rockeronebp, bloxprod, xprdata — 2 dapps each
+
 - **madblocks** — MadTower (climb-and-cash-out game with a real XPR pot) and MadRaffle
   (voter-facing raffle from BP rewards).
 - **rockeronebp** — Neard (on-chain music streaming with real-time artist payouts) and Railgun
@@ -129,8 +134,8 @@ that don't currently resolve to a working app. That still counts as unshipped fo
 
 ## The honest headline
 
-**16 of 36 non-ProtonNZ BPs ship at least one XPR-specific dapp. 3 ship 3 or more. Cafe
-(Metallicus) and alvosec are tied for second at 4 apps each.**
+**16 of 36 non-ProtonNZ BPs ship at least one XPR-specific dapp. 4 ship 3 or more. Cafe
+(Metallicus) leads the rest at 5; alvosec is next at 4.**
 
 Rounding is doing some work here — Metallicus built the entire network, so ranking their
 product output against ours isn't quite fair either direction. But excluding them, **the gap
