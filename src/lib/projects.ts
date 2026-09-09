@@ -20,7 +20,7 @@ export const projects: Project[] = [
       "Confidential transfers on XPR Network — hidden amounts, visible parties, mandatory auditor viewing key. Not a mixer.",
     longDescription:
       "pulse-privacy adds confidential transfers to XPR Network as a bolt-on smart contract (account `xprconf`), not a private chain. Amounts are hidden by ElGamal commitments and Groth16 zero-knowledge proofs; parties stay visible and every transfer carries a mandatory auditor viewing key so compliance and forensics remain possible. Deposit, proven send, and proven withdraw are live on both networks — mainnet with early-access caps (20,000 XPR pool, 1,000 XPR per deposit) running on a rehearsal proving key until the trusted-setup ceremony finalises it. Unaudited.",
-    url: "https://private.protonnz.com",
+    url: "https://privatexpr.com",
     status: "live",
     tags: ["Privacy", "ZK", "Groth16", "PulseVM", "XPR Network"],
     featured: true,
@@ -56,6 +56,20 @@ export const projects: Project[] = [
     featured: true,
     gradient: "from-indigo-600/30 via-blue-500/20 to-sky-500/30",
     icon: "🔀",
+  },
+  {
+    slug: "glbdex",
+    title: "GLBDEX",
+    description:
+      "3D-model marketplace and viewer for the metaverse — buy, sell, and inspect GLB assets on XPR Network.",
+    longDescription:
+      "GLBDEX is a 3D-model marketplace built on XPR Network for the metaverse era: creators list GLB assets, buyers browse and inspect models in-browser via GLBDEX XR, and transactions settle on-chain with zero fees. Designed for game studios, XR builders, and creators who want a chain-native storefront for 3D content.",
+    url: "https://glbdex.com",
+    status: "live",
+    tags: ["3D", "Marketplace", "XR", "XPR Network"],
+    featured: true,
+    gradient: "from-purple-600/30 via-violet-500/20 to-fuchsia-500/30",
+    icon: "🧊",
   },
   {
     slug: "chain-runner",
