@@ -181,10 +181,10 @@ export const projects: Project[] = [
       "Blockchain-based price prediction game where players compete to forecast market movements.",
     longDescription:
       "Price Battle is an engaging blockchain game where players predict cryptocurrency price movements and compete against each other. Built on the XPR Network for transparent and verifiable results, with rewards distributed automatically via smart contracts.",
-    url: "#",
-    status: "development",
+    url: "https://proton.link/battle",
+    status: "live",
     tags: ["GameFi", "Prediction", "XPR Network", "Smart Contracts"],
-    featured: false,
+    featured: true,
     gradient: "from-red-600/30 via-rose-500/20 to-pink-500/30",
     icon: "⚔️",
   },
