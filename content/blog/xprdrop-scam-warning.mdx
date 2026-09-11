@@ -6,6 +6,8 @@ tags: ["Security", "Scam Alert", "XPR Network", "WebAuth"]
 coverImage: "/images/blog/xprdrop/cover.png"
 ---
 
+> **⚠️ Update (September 2026):** New delivery, same drainer. The attacker is now minting a fake **"XPR Reward Voucher" NFT** into wallets — its image is a **QR code** with the caption *"Scan the QR to open the claim portal."* **Do not scan it.** The QR leads to the same wallet drainer (now hosted on IPFS, so there's no domain to take down). Holding the NFT is harmless; see [New lure: a QR-code NFT](#new-lure-a-qr-code-nft) below.
+>
 > **⚠️ Update (August 2026):** The scammer is back with a **new domain — `xprgrant.com`** (after `xprdrop.com` was taken offline). It's the same trap: the same fake "XPRDROP" token, the same cloned site, and the same attacker account behind it. If you see a "claim your $XPR airdrop" page on **any** domain, it's this scam. Everything below still applies, and the cleanup tool still fixes it.
 
 An active phishing campaign is draining wallets on XPR Network. It advertises a fake "$XPR
@@ -16,9 +18,10 @@ We built a free tool to fix it: **[cleanup.protonnz.com](https://cleanup.protonn
 the malicious permission and removes it in one transaction you sign yourself. It is non-custodial
 and never touches your keys.
 
-> **Two rules that stop this attack:**
+> **Three rules that stop this attack:**
 > 1. Never open a link from a token memo.
-> 2. There are no free XPR airdrops.
+> 2. Never scan a QR code from an airdropped NFT.
+> 3. There are no free XPR airdrops.
 
 ## How the scam works
 
@@ -44,6 +47,28 @@ open the link and connect your wallet on the fake site.
 ![The fake xprdrop.com phishing site, marked as fake](/images/blog/xprdrop/fake-site.png)
 
 *The fake site itself. A page like this — asking you to connect and "claim" an allocation — exists only to make you sign the drainer permission. Close it.*
+
+## New lure: a QR-code NFT
+
+In September 2026 the same attacker switched delivery methods. Instead of a token with a memo link,
+they now **mint an NFT called "XPR Reward Voucher" directly into wallets**. The NFT's image is a
+**QR code**, and its description reads *"Official XPR Network reward voucher. Scan the QR to open the
+claim portal."* Scanning the QR opens the same drainer — this time hosted on IPFS, so there's no
+website domain to report or shut down.
+
+Three things to know:
+
+- **Holding the NFT is completely harmless.** An NFT sitting in your wallet cannot touch your funds.
+  The danger is only if you scan the QR, open the portal, and sign.
+- **Do not scan the QR code.** There is no reward voucher. It leads to the same "claim" page that
+  makes you sign the drainer permission.
+- **You don't need to remove it to be safe** — you can simply ignore it.
+
+**"I burned it but it's still in my wallet."** The NFT *is* burnable, and burning works — but many
+wallets' "hide" or "remove" option doesn't actually call the on-chain burn, so nothing happens and
+the NFT reappears. If you want it gone for good, open the asset in
+[AtomicHub](https://xpr.atomichub.io) and use its **Burn** button. Either way, leaving it alone is
+safe.
 
 ## Am I affected?
 
