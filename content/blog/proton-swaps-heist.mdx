@@ -1,22 +1,21 @@
 ---
-title: "Anatomy of the proton.swaps Exploit: ~2.1B XPR Drained, 87% Recovered, Pools Made Whole, and the Bugs Fixed for Good"
-date: "2026-09-16"
-excerpt: "On 12 September 2026 an attacker drained ~2.1 billion XPR from proton.swaps through a one-line accounting bug. Three days later every pool was restored to the last unit. Here is the full on-chain breakdown — how it worked, where the money went, the minute-by-minute recovery by the block producers, the exact multisigs and token amounts, the restoration, and the permanent fixes shipped so it can't happen the same way twice."
+title: "Anatomy of the proton.swaps Exploit: ~2.1B XPR Drained, 87% Recovered, and the Bugs Fixed for Good"
+date: "2026-09-15"
+excerpt: "On 12 September 2026 an attacker drained ~2.1 billion XPR from proton.swaps through a one-line accounting bug. Here is the full on-chain breakdown — how it worked, where the money went, the minute-by-minute recovery by the block producers, the exact multisigs and token amounts, and the permanent fixes shipped so it can't happen the same way twice."
 tags: ["Security", "Incident Report", "XPR Network", "DeFi", "Forensics"]
 coverImage: "/images/blog/proton-swaps-heist/cover.png"
 ---
 
-*Updated 16 September 2026: the restoration has executed — every token proton.swaps owes is backed to the
-last unit. Full timeline, recovery multisigs and final reconciliation below.*
+*Updated 15 September 2026 with the full timeline, the recovery multisigs, exact token reconciliation and the
+pool-restoration plan.*
 
 On **12 September 2026**, between 17:19 and 17:35 UTC, an attacker drained the MetalX AMM contract
 **`proton.swaps`** of roughly **2.1 billion XPR** plus its token reserves — one of the largest single
 incidents in XPR Network's history. Within six hours the block producers had frozen the attacker's accounts,
 fixed a second broken system contract that was blocking the recovery, and seized the accounts by multisig.
 By the next morning about **87%** of the XPR — and 100% of the stablecoins — was sitting in a
-governance-controlled treasury. On 14 September the XPR Consortium approved the grant to cover what had
-escaped, and on 15 September at 17:46 UTC — three days and 26 minutes after the drain — **every pool was
-restored to exactly what the contract's ledger says it owes.**
+governance-controlled treasury. By 14 September the XPR Consortium had approved the grant that makes the
+pools whole.
 
 This is the complete, on-chain account: how the exploit worked, where the money went, exactly how the
 recovery happened (including the bug that nearly stopped it), and — the part that matters most for the
@@ -36,10 +35,8 @@ forensic write-ups (Alvosec and others); the on-chain facts line up to the digit
 - The recovery needed a **second bug fixed first**: `eosio.wrap`, the BP account-recovery tool, was broken.
   The producers diagnosed it together in the BP channel, ProtonNZ wrote and built the fix, and 16 block
   producers deployed it to mainnet the same night.
-- The **XPR Consortium granted 290,793,873.4965 XPR** to cover what escaped, and on 15 September the pools
-  were **restored in a single transaction to the exact figures the contract's own ledger says it owes** —
-  20 of 20 tokens at zero difference. Liquidity providers lose nothing; the pools reopen when the pause is
-  lifted.
+- The **XPR Consortium granted 290,793,873.4965 XPR** to cover what escaped; the pools will be restored to
+  the exact figures the contract's own ledger says it owes.
 - Permanent fixes to `XPRNetwork/proton.contracts`: inline `eosio.wrap`
   ([PR #8](https://github.com/XPRNetwork/proton.contracts/pull/8)), blocklist enforcement in `eosio.token`
   ([PR #9](https://github.com/XPRNetwork/proton.contracts/pull/9)), and removal of the last dead deferred-transaction
@@ -222,15 +219,16 @@ byte-for-byte against the build that had passed the same test on testnet.
 
 **The restoration executed at 17:46 UTC** — one transaction from `recoverfunds`
 ([`5157f47d…`](https://explorer.xprnetwork.org/transaction/5157f47de01e2771c522425a4c4c2fb0dba0b302dfae24cc5f52b6f8ff99908d)),
-fifteen tokens, after a 10 XPR test a minute earlier. Final reconciliation against the contract's own ledger:
+fifteen tokens, after a 10 XPR test a minute earlier, plus a final 0.5 XMD at 18:20 to back one open limit
+order that had also been drained ([`74a2729d…`](https://explorer.xprnetwork.org/transaction/74a2729dd013bb500e437c903f26c71c25cacc746f2c063439b179aae8fdeb87)). Final reconciliation against the contract's own ledger:
 
-| Token | Owed (pools + deposits) | Held after restore | Difference |
+| Token | Owed (pools + deposits + open orders) | Held after restore | Difference |
 |---|---|---|---|
 | XPR | 1,559,844,174.1698 | 1,559,844,174.1698 | 0 |
 | METAL | 13,181,556.49829270 | 13,181,556.49829270 | 0 |
 | XMT | 188,435.14294895 | 188,435.14294895 | 0 |
 | XUSDC | 1,374,114.630092 | 1,374,114.630092 | 0 |
-| XMD | 571,767.317953 | 571,767.317953 | 0 |
+| XMD | 571,767.817953 | 571,767.817953 | 0 |
 | SNIPS, LOAN, MINT, STRX, XDOGE, XADA, XEOS, XLTC, XETH, XBTC | = | = | 0 |
 
 **Every token the contract owes is now backed to the last unit.** No deposit row was created by the
