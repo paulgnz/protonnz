@@ -33,8 +33,8 @@ forensic write-ups (Alvosec and others); the on-chain facts line up to the digit
 - **~277M XPR + 310K METAL escaped** to KuCoin, MEXC and Gate.io before the freeze — now the subject of
   law-enforcement action, with strong KYC leads.
 - The recovery needed a **second bug fixed first**: `eosio.wrap`, the BP account-recovery tool, was broken.
-  ProtonNZ diagnosed it, wrote and tested the fix, and 15 block producers deployed it to mainnet the same
-  night.
+  The producers diagnosed it together in the BP channel, ProtonNZ wrote and built the fix, and 16 block
+  producers deployed it to mainnet the same night.
 - The **XPR Consortium granted 290,793,873.4965 XPR** to cover what escaped; the pools will be restored to
   the exact figures the contract's own ledger says it owes.
 - Permanent fixes to `XPRNetwork/proton.contracts`: inline `eosio.wrap`
@@ -134,23 +134,30 @@ From the first negative withdraw to the attacker's keys being rotated: **six hou
 the first blocklist entry to keys rotated: four and a half hours — most of that spent discovering and fixing
 the `eosio.wrap` bug below.
 
-## 5. The bug that almost blocked the recovery — and who fixed it
+## 5. The bug that almost blocked the recovery — and how the BPs fixed it
 
 Block producers froze the attacker cluster within hours. But *seizing* compromised accounts requires
 `eosio.wrap` — the privileged contract BPs use to execute recovery actions by multisig — and
 **`eosio.wrap` was broken.**
 
 Its `exec` scheduled the recovery as a **deferred transaction**. Producers running modern Antelope
-(Leap 5+/Spring) **no longer process deferred transactions at all**, so the first recovery multisig at
-22:19 "executed" successfully… and then silently did nothing. The keys did not rotate. Nobody had ever
-needed `eosio.wrap` since the network upgraded, so nobody knew.
+(Leap 5+/Spring) **no longer process deferred transactions at all**. The first single-account recovery
+multisig at 22:19 "executed" successfully… and then silently did nothing. Alvosec's bundled `recovall`
+reached 15 of 15 approvals and then refused to execute at all — *"deferred transaction with the same
+sender_id and payer already exists"* — because three wrapped calls in one transaction collided on the
+deferred sender ID. Nobody had needed `eosio.wrap` since the network upgraded, so nobody knew.
 
-ProtonNZ (Paul) identified why — the contract was still the 2020 deferred implementation — wrote the fix to
-make `eosio.wrap` run the wrapped actions **inline** (matching the AntelopeIO reference contracts), built
-it, verified it on testnet, and proposed it as BP multisig `wrapinline1`. Fifteen producers signed and it
-was deployed to mainnet at 23:25. Sixty seconds later Alvosec's `recovall` multisig went through the fixed
-contract and the attacker's keys were rotated. That patch is now a proper, reviewed pull request against the
-canonical repo ([PR #8](https://github.com/XPRNetwork/proton.contracts/pull/8)).
+The diagnosis came out of the BP channel in real time: Danemark and ProtonUK pinned it down — the contract
+was still the pre-v3.2.0 deferred implementation and Leap 5+ producers simply drop deferred transactions —
+and Danemark traced the duplicate-sender-ID failure to the way the old contract derived IDs. EOS Amsterdam
+called it: *"while we're here, we can upgrade the wrap contract."* ProtonNZ wrote the fix to make
+`eosio.wrap` run the wrapped actions **inline** (matched exactly to the AntelopeIO reference contract, at
+the group's request), built it, and proposed it as BP multisig `wrapinline1`. Sixteen producers signed
+within four minutes and it was deployed to mainnet at 23:25. Sixty seconds later Alvosec's `recovall` went
+through the fixed contract and the attacker's keys were rotated. That patch is now a proper, reviewed pull
+request against the canonical repo ([PR #8](https://github.com/XPRNetwork/proton.contracts/pull/8)) — and
+the idea behind PR #9 (make native XPR honour the blocklist so mobilising 15 BPs is never this
+time-critical again) was raised in the same channel, in the same hour.
 
 Credit where it's due: the block producers turned around **three separate 15-of-21 multisigs in under an
 hour** on a Saturday night — `freezeatk`, `wrapinline1`, `recovall` — and a fourth (`unfreezeatk`) the next
