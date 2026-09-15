@@ -125,7 +125,8 @@ All times UTC. Every row is a public transaction.
 | 07:13 | `lending.loan` debt repaid (565M XPR; 1.36M excess auto-refunded); collateral unwound and redeemed | recovery key |
 | 14 Sep 21:17 | XPR Consortium grant **290,793,873.4965 XPR** → `recoverfunds` (`admin.proton` committee, 3 of 6) | XPR Consortium |
 | 15 Sep 00:03 | 18,991,937.9886 XPR → `metalpayroll`, exchanged for the 310,000 METAL + 18,778 XMT the pools are short | recovery key |
-| pending | Restoration deposit into `proton.swaps`; unpause | Metallicus, BPs |
+| 15 Sep 03:17 | 310,000 METAL delivered to `recoverfunds` from `xprtreasury` ([tx](https://explorer.xprnetwork.org/transaction/47d196e3dbc1e64cc4d91699437bafc1c567d61782283b656e0ded9c3a4698e5)) | Metallicus |
+| pending | 18,778 XMT delivered; restoration deposit into `proton.swaps`; unpause | Metallicus, BPs |
 
 From the first negative withdraw to the attacker's keys being rotated: **six hours seven minutes**. From
 the first blocklist entry to keys rotated: four and a half hours — most of that spent discovering and fixing
@@ -151,9 +152,20 @@ canonical repo ([PR #8](https://github.com/XPRNetwork/proton.contracts/pull/8)).
 
 Credit where it's due: the block producers turned around **three separate 15-of-21 multisigs in under an
 hour** on a Saturday night — `freezeatk`, `wrapinline1`, `recovall` — and a fourth (`unfreezeatk`) the next
-morning. Alvosec, Saltant, Brotonbp, Madblocks and ProtonNZ executed them; the signatures came from across
-the producer set. Metallicus patched and paused the swap contract, ran the token-level freezes, and are
-writing the restoration change. This was a genuinely coordinated response.
+morning. Metallicus patched and paused the swap contract, ran the token-level freezes, and are writing the
+restoration change. This was a genuinely coordinated response, and every signature is on-chain:
+
+| Multisig | Purpose | Proposed by | Approvals (in signing order) | Executed |
+|---|---|---|---|---|
+| `recovall` | Rotate the attacker accounts' keys via `eosio.wrap` | Alvosec | **17** — alvosec, protonnz, eosamsterdam, saltant, snipverse, storexbp, protonuk, bloxprod, eosusa, xprnodeonebp, catsvote, madblocks, cerebroai, totalproton, cafe, brotonbp, cryptolions (21:05–21:51) | 23:26 by protonnz, once `eosio.wrap` was fixed |
+| `freezeatk` | Actor-level freeze of the attacker cluster | Metallicus | **15 in 3 min 39 s** — bloxprod, storexbp, snipverse, madblocks, xprnodeonebp, brotonbp, totalproton, protonnz, protonuk, eosusa, cryptolions, catsvote, alvosec, protonmadrid, eosamsterdam (22:45:09–22:48:48) | 22:49 by protonnz |
+| `wrapinline1` | Deploy the inline `eosio.wrap` fix | ProtonNZ | **16 in 3 min 57 s** — storexbp, saltant, cryptolions, madblocks, xprnodeonebp, catsvote, protonuk, snipverse, eosamsterdam, protonmadrid, protonnz, alvosec, bloxprod, brotonbp, danemarkbp, cafe (23:21:00–23:24:57) | 23:25 by protonnz |
+| `recovall2` | Seize the remaining cluster accounts | ProtonNZ | **17 in 4 min 28 s** — storexbp, brotonbp, danemarkbp, snipverse, catsvote, bloxprod, xprnodeonebp, madblocks, protonnz, protonuk, alvosec, protonmadrid, cryptolions, eosamsterdam, eosusa, saltant, cafe (23:33:16–23:37:44) | 23:37 by saltant |
+| `unfreezeatk` | Restore CPU/NET to the seized accounts so they can be swept | Metallicus | **15** — protonind, protonnz, saltant, snipverse, storexbp, bloxprod, blocksforge, eosusa, alvosec, xprnodeonebp, cafe, cerebroai, brotonbp, catsvote, madblocks (13 Sep 01:09–06:37) | 13 Sep 06:37 by madblocks |
+| `swapsgrant` | XPR Consortium grant, 290,793,873.4965 XPR → `recoverfunds` | ProtonNZ | **3 of 6** committee — protonnz, alvosec, cryptolions (14 Sep 20:14–21:06) | 14 Sep 21:17 by protonnz |
+
+Twenty different producer accounts signed at least one of these. Several — alvosec, protonnz, snipverse,
+storexbp, bloxprod, xprnodeonebp, catsvote, madblocks, brotonbp — signed all five BP multisigs.
 
 ## 6. What was recovered — exact figures
 
