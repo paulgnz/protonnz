@@ -63,9 +63,10 @@ one of the same size.
 **This wasn't the first attempt.** Three months earlier, on **18 June 2026**, an account named
 `gatedepostf` ran the *exact same* negative-withdraw against `proton.swaps` — but with the wrong decimal
 precision (`-10000 XPR` instead of `-10000.0000 XPR`). It left a phantom, unpayable ledger entry and paid
-out nothing. A public probe that found the door, tried the handle wrong, and left. A full scan of all
-16,940 `withdraw` calls in the contract's history shows only three accounts ever passed a negative
-amount: that June probe, and the two September exploiters.
+out nothing. A public probe that found the door, tried the handle wrong, and left. A full scan of every
+`withdraw` call in the contract's life — **117,530 of them, from deployment in December 2020 to today** —
+shows only three accounts ever passed a negative amount: that June probe, and the two September
+exploiters. Nothing else was ever taken.
 
 ## 2. The drain and the money trail
 
@@ -266,7 +267,9 @@ changes should be.
 - **Keep privileged system contracts current.** `eosio.wrap` being on a deprecated deferred model turned a
   bad day into a much longer one. Rehearse recovery on testnet *before* you need it.
 - **Watch the probes.** The June `gatedepostf` attempt was visible on-chain for three months. Monitoring for
-  negative or malformed amounts on ledger contracts is cheap.
+  negative or malformed amounts on ledger contracts is cheap — and in this case it didn't even need to be
+  clever: `withdraw` had not been called **once in the 46 months** before that probe. An alert on "any
+  `withdraw` at all" would have fired on 18 June with zero false positives and given 86 days' warning.
 
 ## Closing
 
