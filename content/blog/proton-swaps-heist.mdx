@@ -131,7 +131,7 @@ All times UTC. Every row is a public transaction.
 | 15 Sep 17:44 | `proton.swaps` updated with the restoration path ([tx](https://explorer.xprnetwork.org/transaction/5ae1e8c57b3c032b3f6fa31954a20cfc5cf3dc7a1be792b7b9e4fcfe6e5ca6fd)) | Metallicus |
 | 17:45 | 10 XPR test restoration ([tx](https://explorer.xprnetwork.org/transaction/4ba73867c2d894d50aabe04f4e87bbc80cc07ce75d988e05acc6b89647da644d)) — accepted, nothing booked | recovery key |
 | **17:46** | **Full restoration: 15 tokens, 1,556,474,381.8415 XPR + all pool tokens, in one transaction** ([tx](https://explorer.xprnetwork.org/transaction/5157f47de01e2771c522425a4c4c2fb0dba0b302dfae24cc5f52b6f8ff99908d)). Every token now held = owed, to the last unit | recovery key |
-| pending | Unpause | Metallicus |
+| **15 Sep 18:42** | **`proton.swaps` unpaused — trading reopens** ([tx](https://explorer.xprnetwork.org/transaction/a4139af8c33e7acbc834961687b9ab9f31498c87e94bfd9e96a33c8292da8d2d)); deposit withdrawals held paused for a staged reopening | Metallicus |
 
 From the first negative withdraw to the attacker's keys being rotated: **six hours seven minutes**. From
 the first blocklist entry to keys rotated: four and a half hours — most of that spent discovering and fixing
@@ -234,7 +234,8 @@ order that had also been drained ([`74a2729d…`](https://explorer.xprnetwork.or
 **Every token the contract owes is now backed to the last unit.** No deposit row was created by the
 restoration, pool reserves and LP supplies are unchanged, and every liquidity provider's position is intact.
 Of the 290.79M XPR grant, nothing is unspent; the only remainder in `recoverfunds` is 15.01 XUSDC and a
-fraction of an XMD that the pools weren't owed. The pools reopen when Metallicus lifts the pause.
+fraction of an XMD that the pools weren't owed. Metallicus reopened trading at 18:42 UTC, less than an hour after the restoration, keeping deposit withdrawals
+paused for a staged reopening. Solvency checks taken while live trading resumed read held = owed on every token.
 
 ## 8. Attribution
 
