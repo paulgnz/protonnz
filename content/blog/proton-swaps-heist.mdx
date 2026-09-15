@@ -1,7 +1,7 @@
 ---
-title: "Anatomy of the proton.swaps Exploit: ~2.1B XPR Drained, 87% Recovered, and the Bugs Fixed for Good"
+title: "Anatomy of the proton.swaps Exploit: ~2.1B XPR Drained, Pools 100% Restored, and the Bugs Fixed for Good"
 date: "2026-09-15"
-excerpt: "On 12 September 2026 an attacker drained ~2.1 billion XPR from proton.swaps through a one-line accounting bug. Here is the full on-chain breakdown — how it worked, where the money went, the minute-by-minute recovery by the block producers, the exact multisigs and token amounts, and the permanent fixes shipped so it can't happen the same way twice."
+excerpt: "On 12 September 2026 an attacker drained ~2.1 billion XPR from proton.swaps through a one-line accounting bug. Every pool has now been restored to the last unit. Here is the full on-chain breakdown — how it worked, where the money went, the minute-by-minute recovery by the block producers, the exact multisigs and token amounts, and the permanent fixes shipped so it can't happen the same way twice."
 tags: ["Security", "Incident Report", "XPR Network", "DeFi", "Forensics"]
 coverImage: "/images/blog/proton-swaps-heist/cover.png"
 ---
@@ -28,6 +28,8 @@ forensic write-ups (Alvosec and others); the on-chain facts line up to the digit
 
 - **~2.1B XPR drained** from `proton.swaps` (~$5.4M at drain-time prices): ~1.556B directly, plus 563.5M
   borrowed from `lending.loan` against stolen stablecoin collateral.
+- **Pools 100% restored** on 15 September: every token the contract owes is back, matched to the last unit
+  against its own ledger, and every LP position is intact. Trading reopened the same day.
 - **1,855,642,289 XPR (87%) recovered** to the BP-controlled `recoverfunds` treasury, plus **100% of the
   stolen stablecoins** (1.37M XUSDC + 571K XMD), 12.87M METAL and every other pool token.
 - **~277M XPR + 310K METAL escaped** to KuCoin, MEXC and Gate.io before the freeze — now the subject of
