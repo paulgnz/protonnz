@@ -128,7 +128,10 @@ All times UTC. Every row is a public transaction.
 | 15 Sep 00:03 | 18,991,937.9886 XPR → `metalpayroll`, exchanged for the 310,000 METAL + 18,778 XMT the pools are short | recovery key |
 | 15 Sep 03:17 | 310,000 METAL delivered to `recoverfunds` from `xprtreasury` ([tx](https://explorer.xprnetwork.org/transaction/47d196e3dbc1e64cc4d91699437bafc1c567d61782283b656e0ded9c3a4698e5)) | Metallicus |
 | 15 Sep 04:15 | 18,778 XMT delivered to `recoverfunds` ([tx](https://explorer.xprnetwork.org/transaction/7ac12d755d66b1849ed0db4f103dbfae89ca490787e257d3bf400c5dff72c94b)) — every token the pools are owed is now staged in one account | Metallicus |
-| pending | Restoration deposit into `proton.swaps`; unpause | Metallicus, BPs |
+| 15 Sep 17:44 | `proton.swaps` updated with the restoration path ([tx](https://explorer.xprnetwork.org/transaction/5ae1e8c57b3c032b3f6fa31954a20cfc5cf3dc7a1be792b7b9e4fcfe6e5ca6fd)) | Metallicus |
+| 17:45 | 10 XPR test restoration ([tx](https://explorer.xprnetwork.org/transaction/4ba73867c2d894d50aabe04f4e87bbc80cc07ce75d988e05acc6b89647da644d)) — accepted, nothing booked | recovery key |
+| **17:46** | **Full restoration: 15 tokens, 1,556,474,381.8415 XPR + all pool tokens, in one transaction** ([tx](https://explorer.xprnetwork.org/transaction/5157f47de01e2771c522425a4c4c2fb0dba0b302dfae24cc5f52b6f8ff99908d)). Every token now held = owed, to the last unit | recovery key |
+| pending | Unpause | Metallicus |
 
 From the first negative withdraw to the attacker's keys being rotated: **six hours seven minutes**. From
 the first blocklist entry to keys rotated: four and a half hours — most of that spent discovering and fixing
@@ -211,10 +214,26 @@ One more piece of engineering was needed: as written, `proton.swaps` treats any 
 user deposit (which would book a *new* liability, leaving the contract exactly as insolvent as before) or a
 swap — and rejects both while paused. **A special modification had to be made to the contract so that the
 restoration funds can be deposited back without being credited to anyone**, restoring solvency without
-touching a single pool balance or LP share. Once that is deployed, the restoration is one transaction from
-`recoverfunds` and the pools reopen with every liquidity provider's position intact.
+touching a single pool balance or LP share. Metallicus deployed it on 15 September at 17:44 UTC, verified
+byte-for-byte against the build that had passed the same test on testnet.
 
-A per-token, per-pool reconciliation will be published with the transaction IDs when it executes.
+**The restoration executed at 17:46 UTC** — one transaction from `recoverfunds`
+([`5157f47d…`](https://explorer.xprnetwork.org/transaction/5157f47de01e2771c522425a4c4c2fb0dba0b302dfae24cc5f52b6f8ff99908d)),
+fifteen tokens, after a 10 XPR test a minute earlier. Final reconciliation against the contract's own ledger:
+
+| Token | Owed (pools + deposits) | Held after restore | Difference |
+|---|---|---|---|
+| XPR | 1,559,844,174.1698 | 1,559,844,174.1698 | 0 |
+| METAL | 13,181,556.49829270 | 13,181,556.49829270 | 0 |
+| XMT | 188,435.14294895 | 188,435.14294895 | 0 |
+| XUSDC | 1,374,114.630092 | 1,374,114.630092 | 0 |
+| XMD | 571,767.317953 | 571,767.317953 | 0 |
+| SNIPS, LOAN, MINT, STRX, XDOGE, XADA, XEOS, XLTC, XETH, XBTC | = | = | 0 |
+
+**Every token the contract owes is now backed to the last unit.** No deposit row was created by the
+restoration, pool reserves and LP supplies are unchanged, and every liquidity provider's position is intact.
+Of the 290.79M XPR grant, nothing is unspent; the only remainder in `recoverfunds` is 15.01 XUSDC and a
+fraction of an XMD that the pools weren't owed. The pools reopen when Metallicus lifts the pause.
 
 ## 8. Attribution
 
