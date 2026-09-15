@@ -1,20 +1,25 @@
 ---
 title: "Anatomy of the proton.swaps Exploit: ~2.1B XPR Drained, 87% Recovered, and the Bugs Fixed for Good"
-date: "2026-09-14"
-excerpt: "On 12 September 2026 an attacker drained ~2.1 billion XPR from proton.swaps through a one-line accounting bug. Here is the full on-chain breakdown — how it worked, where the money went, how block producers clawed back 87%, and the two permanent contract fixes we shipped so it can't happen the same way twice."
+date: "2026-09-15"
+excerpt: "On 12 September 2026 an attacker drained ~2.1 billion XPR from proton.swaps through a one-line accounting bug. Here is the full on-chain breakdown — how it worked, where the money went, the minute-by-minute recovery by the block producers, the exact multisigs and token amounts, and the permanent fixes shipped so it can't happen the same way twice."
 tags: ["Security", "Incident Report", "XPR Network", "DeFi", "Forensics"]
 coverImage: "/images/blog/proton-swaps-heist/cover.png"
 ---
 
+*Updated 15 September 2026 with the full timeline, the recovery multisigs, exact token reconciliation and the
+pool-restoration plan.*
+
 On **12 September 2026**, between 17:19 and 17:35 UTC, an attacker drained the MetalX AMM contract
 **`proton.swaps`** of roughly **2.1 billion XPR** plus its token reserves — one of the largest single
-incidents in XPR Network's history. Within hours, block producers and Metallicus had frozen the funds,
-and over the following day recovered about **87%** to a governance-controlled treasury.
+incidents in XPR Network's history. Within six hours the block producers had frozen the attacker's accounts,
+fixed a second broken system contract that was blocking the recovery, and seized the accounts by multisig.
+By the next morning about **87%** of the XPR — and 100% of the stablecoins — was sitting in a
+governance-controlled treasury. By 14 September the XPR Consortium had approved the grant that makes the
+pools whole.
 
-This is the complete, on-chain account: how the exploit worked, where the money went, how the recovery
-actually happened (including a second, unrelated bug that nearly stopped it), and — the part that matters
-most for the network's future — the **two contract fixes we've submitted upstream** so the same class of
-failure can't recur.
+This is the complete, on-chain account: how the exploit worked, where the money went, exactly how the
+recovery happened (including the bug that nearly stopped it), and — the part that matters most for the
+network's future — the **contract fixes submitted upstream** so the same class of failure can't recur.
 
 Everything below is reproducible from public chain history. We've cross-checked it against two independent
 forensic write-ups (Alvosec and others); the on-chain facts line up to the digit.
@@ -23,14 +28,19 @@ forensic write-ups (Alvosec and others); the on-chain facts line up to the digit
 
 - **~2.1B XPR drained** from `proton.swaps` (~$5.4M at drain-time prices): ~1.556B directly, plus 563.5M
   borrowed from `lending.loan` against stolen stablecoin collateral.
-- **~1.85B XPR (87%) recovered** to a BP/Metallicus-controlled treasury, plus **100% of the stolen
-  stablecoin collateral** (1.37M XUSDC + 571K XMD) and the METAL/ecosystem-token reserves.
+- **1,855,642,289 XPR (87%) recovered** to the BP-controlled `recoverfunds` treasury, plus **100% of the
+  stolen stablecoins** (1.37M XUSDC + 571K XMD), 12.87M METAL and every other pool token.
 - **~277M XPR + 310K METAL escaped** to KuCoin, MEXC and Gate.io before the freeze — now the subject of
   law-enforcement action, with strong KYC leads.
 - The recovery needed a **second bug fixed first**: `eosio.wrap`, the BP account-recovery tool, was broken.
-- We've shipped **two permanent fixes** to `XPRNetwork/proton.contracts`: an inline `eosio.wrap`
-  ([PR #8](https://github.com/XPRNetwork/proton.contracts/pull/8)) and token-level freeze enforcement in
-  `eosio.token` ([PR #9](https://github.com/XPRNetwork/proton.contracts/pull/9)).
+  ProtonNZ diagnosed it, wrote and tested the fix, and 15 block producers deployed it to mainnet the same
+  night.
+- The **XPR Consortium granted 290,793,873.4965 XPR** to cover what escaped; the pools will be restored to
+  the exact figures the contract's own ledger says it owes.
+- Permanent fixes to `XPRNetwork/proton.contracts`: inline `eosio.wrap`
+  ([PR #8](https://github.com/XPRNetwork/proton.contracts/pull/8)), blocklist enforcement in `eosio.token`
+  ([PR #9](https://github.com/XPRNetwork/proton.contracts/pull/9)), and removal of the last dead deferred-transaction
+  code in `eosio.system` ([PR #10](https://github.com/XPRNetwork/proton.contracts/pull/10)).
 
 ## 1. The bug: one missing check
 
@@ -52,21 +62,24 @@ one of the same size.
 
 **This wasn't the first attempt.** Three months earlier, on **18 June 2026**, an account named
 `gatedepostf` ran the *exact same* negative-withdraw against `proton.swaps` — but with the wrong decimal
-precision (`-10000 XPR` instead of `-10000.0000 XPR`), so it failed on a symbol mismatch. A public probe
-that found the door, tried the handle wrong, and left. Someone else came back in September and turned it.
+precision (`-10000 XPR` instead of `-10000.0000 XPR`). It left a phantom, unpayable ledger entry and paid
+out nothing. A public probe that found the door, tried the handle wrong, and left. A full scan of all
+16,940 `withdraw` calls in the contract's history shows only three accounts ever passed a negative
+amount: that June probe, and the two September exploiters.
 
 ## 2. The drain and the money trail
 
 The attacker's account, `nobreed` (created that morning, funded with 12,300 XPR from a KuCoin withdrawal),
 drained ~1.556B XPR plus every pool token, then used the stolen XUSDC/XMD as collateral on `lending.loan`
-to borrow another **563.5M XPR** — squeezing maximum liquid value out of the position.
+to borrow another **563.5M XPR** — squeezing maximum liquid value out of the position. The first exchange
+cash-out (7.5M XPR to MEXC) left at 17:58, thirty-four minutes after the drain.
 
 From there the funds fanned out through purpose-built mule accounts (`sal2i4qb5byz`, `unionchainpi`,
 `unionchainpo`) toward exchanges. A **second, independent exploiter** — `winterbloom4` — hit the same bug
-hours later and laundered its share through the Alcor DEX.
+at 20:56–21:12 and laundered its share (18,778 XMT) through the Alcor DEX.
 
 While the pool was insolvent, it kept quoting as if nothing was wrong: **19,921 swaps** executed against
-phantom reserves in the four-hour window between the drain (17:24) and the emergency pause (21:32) — a
+phantom reserves in the four-hour window between the drain (17:24) and the emergency pause (21:34) — a
 reminder that a drained AMM doesn't stop trading on its own.
 
 The cover image above is the shape of it: one source, a fan-out of mules, exchange endpoints on the right,
@@ -76,8 +89,8 @@ and — in teal — the recovery converging back into a single controlled treasu
 
 | Destination | Amount | Status |
 |---|---|---|
-| **Recovery treasury** (`recoverfunds`) | ~1.28B XPR + 12.87M METAL + 1.37M XUSDC + 571K XMD + wrapped BTC/ETH/DOGE + illiquid ecosystem tokens | ✅ secured |
-| **`lending.loan`** (debt repaid) | 563.6M XPR | ✅ protocol made whole |
+| **Recovery treasury** (`recoverfunds`) | 1,284,672,456 XPR + 12,871,556 METAL + 1,374,130 XUSDC + 571,762 XMD + wrapped BTC/ETH/DOGE/ADA/LTC/EOS + ecosystem tokens (SNIPS, LOAN, MINT, STRX) | ✅ secured |
+| **`lending.loan`** (debt repaid) | 565,000,000 XPR sent, 1,357,182 refunded as over-payment | ✅ protocol made whole |
 | **KuCoin** (`kcdeposit4in`) | ~269.4M XPR | ⚠️ escaped — KYC lead |
 | **MEXC** (`mexcloanloan`) | 7.5M XPR + 310K METAL | ⚠️ escaped — KYC lead |
 | **Gate.io** (`gatedeposit`) | 33 XPR (test) | ⚠️ escaped — KYC lead |
@@ -88,28 +101,99 @@ memo** (a unique customer ID), which ties them to a single exchange account — 
 deanonymization lead of the whole case. Exchange freeze/KYC requests and law-enforcement filings are
 underway for the escaped ~277M.
 
-## 4. The recovery — and the bug that almost blocked it
+## 4. The recovery, minute by minute
 
-Block producers froze the attacker cluster within hours using the network's actor-blacklist. But *seizing*
-compromised accounts requires `eosio.wrap` — the privileged contract BPs use to execute recovery actions
-by multisig — and **`eosio.wrap` was broken.**
+All times UTC. Every row is a public transaction.
+
+| When | What | Who |
+|---|---|---|
+| 12 Sep 17:19–17:35 | `nobreed` probes with `-1 XPR`, then drains 1.526B XPR and every pool token | attacker |
+| 17:35–17:37 | Borrows 563.57M XPR from `lending.loan` against the stolen XUSDC/XMD | attacker |
+| 17:58 | First cash-out: 7.5M XPR → MEXC | attacker |
+| 19:04 | `nobreed` added to the network `blocklist` — its METAL/XUSDC/XMD can no longer move (native XPR can) | Metallicus |
+| 19:07 / 19:54 | `sal2i4qb5byz`, `unionchainpi` blocklisted | Metallicus |
+| 20:56–21:12 | Second exploiter `winterbloom4` hits the same bug | attacker |
+| 21:32 | `proton.swaps` patched (setcode) | Metallicus |
+| 21:34 | `proton.swaps` paused — trading stops | Metallicus |
+| 22:19 | First key-recovery multisig executes through `eosio.wrap`… **and silently does nothing** (see §5) | BPs |
+| 22:43 → 22:49 | BP multisig `freezeatk` proposed and executed **in six minutes** (15 of 21 producers) — actor-level freeze on the cluster | BPs |
+| 23:25 | Patched `eosio.wrap` deployed by BP multisig `wrapinline1` (15 of 21) | ProtonNZ (fix) + BPs (signatures) |
+| 23:26 | Multisig `recovall` (proposed by Alvosec) executes — attacker accounts' keys rotated to the recovery key | Alvosec, BPs |
+| 23:37 | Multisig `recovall2` — remaining cluster accounts seized | ProtonNZ, BPs |
+| 13 Sep 06:37 | BP multisig `unfreezeatk` restores CPU/NET to the seized accounts so they can transact | Metallicus, BPs |
+| 07:10–08:20 | All six accounts swept into `recoverfunds` (sal2i4qb5byz 616.0M, nobreed 620.9M, crymaverick 44.09M, unionchainpo 3.6M, winterbloom4, unionchainpi) | recovery key |
+| 07:13 | `lending.loan` debt repaid (565M XPR; 1.36M excess auto-refunded); collateral unwound and redeemed | recovery key |
+| 14 Sep 21:17 | XPR Consortium grant **290,793,873.4965 XPR** → `recoverfunds` (`admin.proton` committee, 3 of 6) | XPR Consortium |
+| 15 Sep 00:03 | 18,991,937.9886 XPR → `metalpayroll`, exchanged for the 310,000 METAL + 18,778 XMT the pools are short | recovery key |
+| pending | Restoration deposit into `proton.swaps`; unpause | Metallicus, BPs |
+
+From the first negative withdraw to the attacker's keys being rotated: **six hours seven minutes**. From
+the first blocklist entry to keys rotated: four and a half hours — most of that spent discovering and fixing
+the `eosio.wrap` bug below.
+
+## 5. The bug that almost blocked the recovery — and who fixed it
+
+Block producers froze the attacker cluster within hours. But *seizing* compromised accounts requires
+`eosio.wrap` — the privileged contract BPs use to execute recovery actions by multisig — and
+**`eosio.wrap` was broken.**
 
 Its `exec` scheduled the recovery as a **deferred transaction**. Producers running modern Antelope
-(Leap 5+/Spring) **no longer process deferred transactions at all**, so the first recovery multisigs
-"executed" successfully… and then silently did nothing.
+(Leap 5+/Spring) **no longer process deferred transactions at all**, so the first recovery multisig at
+22:19 "executed" successfully… and then silently did nothing. The keys did not rotate. Nobody had ever
+needed `eosio.wrap` since the network upgraded, so nobody knew.
 
-The fix was to make `eosio.wrap` run the wrapped actions **inline** instead of deferring them — matching
-the AntelopeIO reference contracts. We wrote the patch, built it, tested it on testnet, and BPs deployed
-it to mainnet by multisig. With a working recovery tool, the block producers then:
+ProtonNZ (Paul) identified why — the contract was still the 2020 deferred implementation — wrote the fix to
+make `eosio.wrap` run the wrapped actions **inline** (matching the AntelopeIO reference contracts), built
+it, verified it on testnet, and proposed it as BP multisig `wrapinline1`. Fifteen producers signed and it
+was deployed to mainnet at 23:25. Sixty seconds later Alvosec's `recovall` multisig went through the fixed
+contract and the attacker's keys were rotated. That patch is now a proper, reviewed pull request against the
+canonical repo ([PR #8](https://github.com/XPRNetwork/proton.contracts/pull/8)).
 
-1. Rotated the keys on the attacker accounts to a governance-held recovery key.
-2. Repaid the 563.6M XPR `lending.loan` debt and redeemed 100% of the stolen stablecoin collateral.
-3. Swept the remaining balances into the `recoverfunds` treasury.
+Credit where it's due: the block producers turned around **three separate 15-of-21 multisigs in under an
+hour** on a Saturday night — `freezeatk`, `wrapinline1`, `recovall` — and a fourth (`unfreezeatk`) the next
+morning. Alvosec, Saltant, Brotonbp, Madblocks and ProtonNZ executed them; the signatures came from across
+the producer set. Metallicus patched and paused the swap contract, ran the token-level freezes, and are
+writing the restoration change. This was a genuinely coordinated response.
 
-Net result: **~1.85B XPR (87%) and all the stablecoin collateral secured.** The ~13% that escaped had
-already reached centralized exchanges before the freeze.
+## 6. What was recovered — exact figures
 
-## 5. Attribution
+The contract's own ledger (`pools` reserves plus the `deposits` table) says what it owes per token. Comparing
+that to the contract's actual balances gives the deficit; comparing the deficit to what was swept into
+`recoverfunds` proves nothing else ever left:
+
+| Token | Deficit in proton.swaps | Recovered to `recoverfunds` | Still short | Explained by |
+|---|---|---|---|---|
+| XPR | 1,556,474,391.8415 | 1,284,672,456.3336 | 271,801,935.5079 | escaped to exchanges |
+| METAL | 13,181,556.49820203 | 12,871,556.49820203 | 310,000 | escaped to MEXC |
+| XMT | 18,778.00000000 | 0 | 18,778 | winterbloom4 sold via Alcor |
+| XUSDC | 1,374,114.630083 | 1,374,129.643548 | — | fully recovered (15 surplus) |
+| XMD | 571,767.317950 | 571,761.848332 | 5.47 | dust |
+| SNIPS, LOAN, MINT, STRX, XDOGE, XADA, XEOS, XLTC, XETH, XBTC | = recovered | exact | 0 | fully recovered |
+
+Eleven of fifteen tokens match to the last unit. The only unexplained deficit on the entire contract is
+about $5 of XMD.
+
+## 7. Making the pools whole
+
+The 271.8M XPR, 310K METAL and 18,778 XMT that escaped are with law enforcement and the exchanges; that
+process takes months and may or may not return anything. Liquidity providers shouldn't wait for it.
+
+On 14 September the **XPR Consortium approved a grant of 290,793,873.4965 XPR** from `xprgrants` — the
+exact XPR deficit (271,801,935.5079) plus the XPR needed to obtain the missing METAL and XMT
+(18,991,937.9886, priced by walking the live MetalX order book so it could be justified to the unit). The
+METAL and XMT are being sourced over-the-counter from Metallicus rather than on the open market, so there's
+no price impact on either token.
+
+One more piece of engineering was needed: as written, `proton.swaps` treats any token sent to it as either a
+user deposit (which would book a *new* liability, leaving the contract exactly as insolvent as before) or a
+swap — and rejects both while paused. **A special modification had to be made to the contract so that the
+restoration funds can be deposited back without being credited to anyone**, restoring solvency without
+touching a single pool balance or LP share. Once that is deployed, the restoration is one transaction from
+`recoverfunds` and the pools reopen with every liquidity provider's position intact.
+
+A per-token, per-pool reconciliation will be published with the transaction IDs when it executes.
+
+## 8. Attribution
 
 On-chain analysis shows the attacker accounts weren't random — they're a coordinated cluster. Several
 infrastructure/mule accounts were created months in advance by the **same cryptographic key**, and stolen
@@ -120,49 +204,63 @@ We're deliberately not naming individuals here. Attribution is an exchange-KYC a
 and the leads are strong: the seed funding, the cash-outs, and the deposit memos all point back to
 identifiable exchange accounts.
 
-## 6. The permanent fixes
+## 9. The permanent fixes
 
 Recovering the funds was the emergency. Making sure the network is *structurally* better afterwards is the
-job. This incident exposed two gaps, and we've submitted upstream fixes for both:
+job. This incident exposed gaps in the system contracts, and we've submitted upstream fixes:
 
 **1. `eosio.wrap` — inline execution
 ([PR #8](https://github.com/XPRNetwork/proton.contracts/pull/8)).**
 The account-recovery tool was left on the pre-Leap-5 deferred implementation — broken *before it was ever
-needed*. The emergency mainnet patch is now a proper, reviewed, testnet-verified pull request against
-`XPRNetwork/proton.contracts`, so the canonical `eosio.wrap` works on modern Antelope. Privileged system
-contracts should never be a surprise dependency in the middle of an incident.
+needed*. The emergency mainnet patch is now a reviewed, testnet-verified pull request so the canonical
+`eosio.wrap` works on modern Antelope. Privileged system contracts should never be a surprise dependency in
+the middle of an incident.
 
 **2. `eosio.token` — enforce the network blocklist
 ([PR #9](https://github.com/XPRNetwork/proton.contracts/pull/9)).**
-XPR already has a shared on-chain `blocklist` contract that the wrapped tokens (xtokens) honour — a
-blocklisted account can't move METAL, XUSDC, etc. But **`eosio.token` (native XPR) never checked it** — the
-token contract has been unchanged since December 2020. So stolen *XPR* could keep moving even while the
-same account's wrapped balances were frozen. PR #9 makes `eosio.token` read the same shared blocklist
-(sender-side, exactly matching xtokens), with core system accounts explicitly exempt so a blocklist entry
-can never halt staking, RAM, or rewards chain-wide. We built it, and verified the full freeze/unfreeze flow
-end-to-end on testnet.
+XPR already has a shared on-chain `blocklist` contract that the wrapped tokens honour — a blocklisted
+account can't move METAL, XUSDC, etc. But **`eosio.token` (native XPR) never checked it** — the token
+contract has been unchanged since 2020. So on 12 September the attacker's METAL was frozen at 19:04 while
+his XPR kept moving until the BPs could assemble a 15-of-21 key takeover. PR #9 makes `eosio.token` read the
+same shared blocklist (sender-side, exactly matching xtokens), with core system accounts explicitly exempt so
+a blocklist entry can never halt staking, RAM, or rewards chain-wide. We built it with the same compiler that
+produced the live contract — the current on-chain `eosio.token` rebuilds byte-for-byte from the repository,
+and the fix differs from it by 42 lines — and verified the full freeze/unfreeze flow on testnet. It is a real
+power the native token didn't have before, and it is being put to the block producers as an explicit
+decision, not slipped in.
 
-Both are drafts pending human review and audit before any mainnet deployment — as privileged system-contract
+**3. `eosio.system` — remove the last dead deferred-transaction code
+([PR #10](https://github.com/XPRNetwork/proton.contracts/pull/10)).**
+The same bug class as `eosio.wrap` turned out to be live in the system contract itself: XPR unstake refunds
+were scheduled as deferred transactions that never fire (about a quarter of unstakers had XPR stuck past the
+24-hour window), and the code would start *failing outright* the day the network activates the standard
+`DISABLE_DEFERRED_TRXS` protocol features. PR #10 removes it and makes matured refunds claimable by anyone,
+so a keeper can deliver them automatically again.
+
+All three are pending human review, testnet runs and audit before mainnet, as privileged system-contract
 changes should be.
 
-## 7. What proton.swaps needs (and what everyone can learn)
+## 10. What proton.swaps needs (and what everyone can learn)
 
 - **Assert `quantity.amount > 0` on every token-moving action.** A `balance ≥ amount` guard is *not* a
   positive-amount check; signed asset amounts make negative inputs a real attack surface. Audit every
   deposit/withdraw ledger for signed-amount handling.
 - **Invariant tests:** a contract's real token balance must always equal the sum of its internal ledger
-  balances. That single test would have caught this in CI.
+  balances. That single test would have caught this in CI — and it is exactly the check that let us prove
+  above that nothing else ever left the contract.
 - **A fast circuit-breaker.** A four-hour gap between drain and pause is a lot of phantom swaps. Emergency
   pause should be reachable quickly, not only through a slow multisig.
 - **Keep privileged system contracts current.** `eosio.wrap` being on a deprecated deferred model turned a
-  bad day into a much longer one.
+  bad day into a much longer one. Rehearse recovery on testnet *before* you need it.
+- **Watch the probes.** The June `gatedepostf` attempt was visible on-chain for three months. Monitoring for
+  negative or malformed amounts on ledger contracts is cheap.
 
 ## Closing
 
 No user lost funds to a stolen private key here — this was a contract bug, and the response was a
-coordinated block-producer and Metallicus effort that got most of the value back and is now closing the
-gaps that made it possible. That's the system working: fast containment, honest post-mortem, and permanent
-fixes in the open.
+coordinated block-producer, Metallicus and XPR Consortium effort that got most of the value back, is making
+liquidity providers whole, and is now closing the gaps that made it possible. That's the system working:
+fast containment, honest post-mortem, and permanent fixes in the open.
 
 If you build on XPR Network and want a second set of eyes on your contracts before they hold real value,
 that's exactly the kind of review this incident argues for. Reach out.
