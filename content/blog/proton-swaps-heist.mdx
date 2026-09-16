@@ -278,10 +278,24 @@ decision, not slipped in.
 **3. `eosio.system` — remove the last dead deferred-transaction code
 ([PR #10](https://github.com/XPRNetwork/proton.contracts/pull/10)).**
 The same bug class as `eosio.wrap` turned out to be live in the system contract itself: XPR unstake refunds
-were scheduled as deferred transactions that never fire (about a quarter of unstakers had XPR stuck past the
-24-hour window), and the code would start *failing outright* the day the network activates the standard
-`DISABLE_DEFERRED_TRXS` protocol features. PR #10 removes it and makes matured refunds claimable by anyone,
-so a keeper can deliver them automatically again.
+are scheduled as deferred transactions that never fire. We measured it properly after the incident, over
+every `unstakexpr` of the last 540 days — **25,167 unstakes by 7,652 accounts**:
+
+> **376 accounts are holding 121,236,971 XPR** (~US$295,000) that matured past the 24-hour window and was
+> never paid out. Median wait: **102 days**. The oldest has been sitting for **536 days**. Roughly a third
+> of all unstakes are never followed by a claim.
+
+Nobody's XPR is lost — it's sitting in the `refundsxpr` table waiting for a `refundxpr` call that the chain
+was supposed to make automatically. Users on wallets that prompt them get it; everyone else doesn't know it
+exists. (The largest single case, ~32M XPR stuck 65 days, belongs to an account that had called `refundxpr`
+manually 119 times before and then stopped.) The same code will also start *failing outright* the day the
+network activates the standard `DISABLE_DEFERRED_TRXS` protocol features. PR #10 removes the dead code and
+makes matured refunds claimable by anyone, so a keeper can deliver them automatically again.
+
+This one doesn't have to wait for a contract change: **any wallet that reads `refundsxpr` and shows a
+"claim" button would clear most of that backlog today**, and ProtonNZ is happy to run a keeper once #10
+lands. Pooled funds are not affected — in all 25,167 unstakes the receiver was always the staker, and no
+staking protocol appears in the list. It's 376 individual wallets.
 
 All three are pending human review, testnet runs and audit before mainnet, as privileged system-contract
 changes should be.
