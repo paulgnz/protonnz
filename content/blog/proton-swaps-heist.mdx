@@ -278,8 +278,17 @@ decision, not slipped in.
 **3. `eosio.system` — remove the last dead deferred-transaction code
 ([PR #10](https://github.com/XPRNetwork/proton.contracts/pull/10)).**
 The same bug class as `eosio.wrap` turned out to be live in the system contract itself: XPR unstake refunds
-are scheduled as deferred transactions that never fire. We measured it properly after the incident, over
-every `unstakexpr` of the last 540 days — **25,167 unstakes by 7,652 accounts**:
+are scheduled as deferred transactions that never fire.
+
+**We can date the day it broke: 1 November 2025.** Pairing every `unstakexpr` with the `refundxpr` that
+follows it shows a clean cliff. Unstake on 30 October 2025 and your refund arrived at the 24-hour mark 95%
+of the time; unstake on 1 November and it never did. That is when XPR's producers finished moving to
+Leap 5+/Spring, which silently discards deferred transactions. Nothing errored, so nobody noticed — the
+unstake still succeeds, the refund is just scheduled into a void. The ~30% of refunds that still land near
+24 hours are people and wallets claiming manually at the first opportunity.
+
+So this has been quietly broken for **ten months**, and the exploit response is simply what uncovered it.
+Measured over every `unstakexpr` of the last 540 days — **25,167 unstakes by 7,652 accounts**:
 
 > **376 accounts are holding 121,236,971 XPR** (~US$295,000) that matured past the 24-hour window and was
 > never paid out. Median wait: **102 days**. The oldest has been sitting for **536 days**. Roughly a third
