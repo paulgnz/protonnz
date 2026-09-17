@@ -77,15 +77,16 @@ drained ~1.556B XPR plus every pool token, then used the stolen XUSDC/XMD as col
 to borrow another **563.5M XPR** — squeezing maximum liquid value out of the position. The first exchange
 cash-out (7.5M XPR to MEXC) left at 17:58, thirty-four minutes after the drain.
 
-From there the funds fanned out through purpose-built mule accounts (`sal2i4qb5byz`, `unionchainpi`,
-`unionchainpo`) toward exchanges. A **second, independent exploiter** — `winterbloom4` — hit the same bug
-at 20:56–21:12 and laundered its share (18,778 XMT) through the Alcor DEX.
+From there the funds moved out through a same-day mule account (`sal2i4qb5byz`, created by `nobreed`
+seventeen minutes after the drain) and straight into exchange deposit wallets. A **second exploiter** —
+`winterbloom4` — hit the same bug at 20:56–21:12, sold its share (18,778 XMT) through the Alcor DEX, and
+deposited the proceeds to the same exchanges.
 
 While the pool was insolvent, it kept quoting as if nothing was wrong: **19,921 swaps** executed against
 phantom reserves in the four-hour window between the drain (17:24) and the emergency pause (21:34) — a
 reminder that a drained AMM doesn't stop trading on its own.
 
-The cover image above is the shape of it: one source, a fan-out of mules, exchange endpoints on the right,
+The cover image above is the shape of it: one source, the accounts the funds passed through, exchange endpoints on the right,
 and — in teal — the recovery converging back into a single controlled treasury.
 
 ## 3. Where the money went
@@ -114,7 +115,7 @@ All times UTC. Every row is a public transaction.
 | 17:35–17:37 | Borrows 563.57M XPR from `lending.loan` against the stolen XUSDC/XMD | attacker |
 | 17:58 | First cash-out: 7.5M XPR → MEXC | attacker |
 | 19:04 | `nobreed` added to the network `blocklist` — its METAL/XUSDC/XMD can no longer move (native XPR can) | Metallicus |
-| 19:07 / 19:54 | `sal2i4qb5byz`, `unionchainpi` blocklisted | Metallicus |
+| 19:07 / 19:54 | `sal2i4qb5byz` blocklisted, and `unionchainpi` — later identified as an exchange deposit wallet (see §8) | Metallicus |
 | 20:56–21:12 | Second exploiter `winterbloom4` hits the same bug | attacker |
 | 21:32 | `proton.swaps` patched (setcode) | Metallicus |
 | 21:34 | `proton.swaps` paused — trading stops | Metallicus |
@@ -124,7 +125,7 @@ All times UTC. Every row is a public transaction.
 | 23:26 | Multisig `recovall` (proposed by Alvosec) executes — attacker accounts' keys rotated to the recovery key | Alvosec, BPs |
 | 23:37 | Multisig `recovall2` — remaining cluster accounts seized | ProtonNZ, BPs |
 | 13 Sep 06:37 | BP multisig `unfreezeatk` restores CPU/NET to the seized accounts so they can transact | Metallicus, BPs |
-| 07:10–08:20 | All six accounts swept into `recoverfunds` (sal2i4qb5byz 616.0M, nobreed 620.9M, crymaverick 44.09M, unionchainpo 3.6M, winterbloom4, unionchainpi) | recovery key |
+| 07:10–08:20 | All six seized accounts swept into `recoverfunds` (sal2i4qb5byz 616.0M, nobreed 620.9M, crymaverick 44.09M, unionchainpo 3.6M, winterbloom4, unionchainpi). Three of the six turned out to be an exchange's wallets — see §8 | recovery key |
 | 07:13 | `lending.loan` debt repaid (565M XPR; 1.36M excess auto-refunded); collateral unwound and redeemed | recovery key |
 | 14 Sep 21:17 | XPR Consortium grant **290,793,873.4965 XPR** → `recoverfunds` (`admin.proton` committee, 3 of 6) | XPR Consortium |
 | 15 Sep 00:03 | 18,991,937.9886 XPR → `metalpayroll`, exchanged for the 310,000 METAL + 18,778 XMT the pools are short | recovery key |
@@ -134,6 +135,8 @@ All times UTC. Every row is a public transaction.
 | 17:45 | 10 XPR test restoration ([tx](https://explorer.xprnetwork.org/transaction/4ba73867c2d894d50aabe04f4e87bbc80cc07ce75d988e05acc6b89647da644d)) — accepted, nothing booked | recovery key |
 | **17:46** | **Full restoration: 15 tokens, 1,556,474,381.8415 XPR + all pool tokens, in one transaction** ([tx](https://explorer.xprnetwork.org/transaction/5157f47de01e2771c522425a4c4c2fb0dba0b302dfae24cc5f52b6f8ff99908d)). Every token now held = owed, to the last unit | recovery key |
 | **15 Sep 18:42** | **`proton.swaps` unpaused — trading reopens** ([tx](https://explorer.xprnetwork.org/transaction/a4139af8c33e7acbc834961687b9ab9f31498c87e94bfd9e96a33c8292da8d2d)); deposit withdrawals held paused for a staged reopening | Metallicus |
+
+**One important correction to that timeline:** three of the six accounts seized that night — `crymaverick`, `unionchainpi` and `unionchainpo` — were not attacker accounts. They are a centralised exchange's own deposit and treasury wallets, which had received the attacker's deposits like any other customer transfer. Nothing on chain identified them as such. Their keys were returned on 15 September and the exchange's own funds are being repaid in full; the detail is in §8.
 
 From the first negative withdraw to the attacker's keys being rotated: **six hours seven minutes**. From
 the first blocklist entry to keys rotated: four and a half hours — most of that spent discovering and fixing
@@ -241,14 +244,34 @@ paused for a staged reopening. Solvency checks taken while live trading resumed 
 
 ## 8. Attribution
 
-On-chain analysis shows the attacker accounts weren't random — they're a coordinated cluster. Several
-infrastructure/mule accounts were created months in advance by the **same cryptographic key**, and stolen
-funds were swept between them under fake "order ID" memos to look like a payment processor. That key
-linkage, plus the shared exchange deposit IDs, ties the operation to a single actor.
+The strongest attribution evidence is not on the blockchain at all — it's in the exchange deposit memos,
+because a memo is the receiving exchange's own customer identifier.
 
-We're deliberately not naming individuals here. Attribution is an exchange-KYC and law-enforcement matter,
-and the leads are strong: the seed funding, the cash-outs, and the deposit memos all point back to
-identifiable exchange accounts.
+**Two exploiters, one exchange account.** `nobreed` drained the contract at 17:19–17:35 UTC; `winterbloom4`
+hit the same bug independently at 20:56–21:12. On chain they look unrelated: no shared keys at the time, no
+transfers between them, separate funding. But **both deposited to the same exchange account under the same
+customer identifier**. Only the exchange can confirm it, and we've asked — but on the face of it, the "second,
+independent exploiter" is the same customer.
+
+**The attack was funded by an exchange withdrawal.** Six minutes before the first exploit call, an exchange's
+withdrawal wallet sent 12,300.4995 XPR to `nobreed`, which had been created that morning and had no other
+source of funds. Whoever requested that withdrawal is identifiable from that exchange's records.
+
+**It was probed three months earlier.** A separate account ran the same negative-amount withdraw on
+18 June 2026 and failed on a decimal-precision error. It also mints counterfeit tokens — including a fake
+"XPR" — and deposited 500,000 of them to an exchange, apparently testing whether forged tokens get credited.
+Whether that account is connected to September's attackers is a question only the exchanges can settle.
+
+**A correction worth making explicitly.** An earlier version of this article described several accounts that
+received stolen funds as attacker infrastructure, because they were created in advance by a common key and
+forwarded funds onward under numeric memos. That was wrong: they are **an exchange's own deposit and treasury
+wallets**, and the memos are its customer payment IDs. Block producers seized them during the response
+because nothing on chain identified them, and control was returned once that became clear. The lesson is in
+§9 — exchanges should register the accounts they operate, so responders can tell a deposit wallet from a mule
+at three in the morning.
+
+We're deliberately not naming individuals. Attribution is an exchange-KYC and law-enforcement matter, and
+detailed reports have gone to every exchange involved.
 
 ## 9. The permanent fixes
 
