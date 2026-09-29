@@ -14,7 +14,7 @@
     "location": {
       "name": "Auckland",
       "country": "NZ",
-      "latitude": 36.8483,
+      "latitude": -36.8483,
       "longitude": 174.7625
     },
     "social": {
@@ -34,7 +34,7 @@
       "location": {
         "name": "Auckland",
         "country": "NZ",
-        "latitude": 36.8483,
+        "latitude": -36.8483,
         "longitude": 174.7625
       },
       "api_endpoint": "http://tn1.protonnz.com:8888",
@@ -45,7 +45,7 @@
       "location": {
         "name": "Auckland",
         "country": "NZ",
-        "latitude": 36.8483,
+        "latitude": -36.8483,
         "longitude": 174.7625
       },
       "p2p_endpoint": "tn1.protonnz.com:9876",
@@ -55,10 +55,20 @@
       "location": {
         "name": "Auckland",
         "country": "NZ",
-        "latitude": 36.8483,
+        "latitude": -36.8483,
         "longitude": 174.7625
       },
       "node_type": "producer"
-    }
-  ]
+    },
+    {
+      "location": {
+        "name": "Falkenstein",
+        "country": "DE",
+        "latitude": 50.4779,
+        "longitude": 12.3713
+      },
+      "ssl_endpoint": "https://hyperion-testnet.protonnz.com",
+      "node_type": "query",
+      "features": ["chain-api", "hyperion-v2"]
+    }  ]
 }
