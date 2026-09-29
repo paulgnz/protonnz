@@ -70,5 +70,6 @@
       "ssl_endpoint": "https://hyperion-testnet.protonnz.com",
       "node_type": "query",
       "features": ["chain-api", "hyperion-v2"]
-    }  ]
+    }
+  ]
 }
